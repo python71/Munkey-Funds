@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import TextField from '@material-ui/core/TextField';
+import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
 
 class NewUser extends Component {
   state = {
@@ -12,7 +13,7 @@ class NewUser extends Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
         <form className="newuser-form">
           <TextField
             id="standard-name"
@@ -43,6 +44,7 @@ class NewUser extends Component {
             placeholder="Set an investment goal for yourself."
           />
         </form>
+        <Link to="/profile"><button>Login</button></Link>
       </div>
     )
   }

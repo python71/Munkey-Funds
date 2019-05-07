@@ -2,22 +2,21 @@ import React, { Component } from "react";
 import Header from './components/header'
 import LoginForm from './components/login/login';
 import "./components/style.css";
-import NewUser from './components/login/newuser';
+import NewUser from './components/login/NewUser';
+import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
 
 class App extends Component {
   render() {
     return (
-      <div>
-        <Header />
-        <div className="container">
-          <div className="form-side">
-            <LoginForm />
-            <br></br>
-            <p>New User</p>
-            <NewUser />
-          </div>
+      <Router>
+        <div>
+          <Header />
         </div>
-      </div>
+        <Route exact path="/" component={LoginForm} />
+        <Route exact path="/newuser" component={NewUser} />
+        {/* <Route exact path="/profile" component={Profile} /> */}
+
+      </Router>
     );
   }
 }
