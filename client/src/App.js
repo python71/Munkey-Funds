@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Header from './components/header'
 import LoginForm from './components/login/login';
 import "./components/style.css";
-import NewUser from './components/login/NewUser';
+import NewUser from './components/login/newuser';
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
 
 class App extends Component {

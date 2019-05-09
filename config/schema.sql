@@ -1,0 +1,2 @@
+DROP DATABASE IF EXISTS monkeyFunds_db;
+CREATE DATABASE monkeyFunds_db;
