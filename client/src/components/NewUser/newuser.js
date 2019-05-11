@@ -4,12 +4,30 @@ import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
 
 class NewUser extends Component {
   state = {
-    name: "",
+    firstname: "",
+    lastname: "",
     email: "",
     password: "",
     goal: "",
 
   };
+
+  validateForm() {
+    return this.state.email.length > 0 && this.state.password.length > 0;
+  }
+
+  handleChange = event => {
+    this.setState({
+      [event.target.id]: event.target.value
+    });
+  }
+
+  handleSubmit = event => {
+    event.preventDefault();
+  }
+
+
+  
 
   render() {
     return (
@@ -44,7 +62,11 @@ class NewUser extends Component {
             placeholder="Set an investment goal for yourself."
           />
         </form>
-        <Link to="/profile"><button>Login</button></Link>
+        <Link to="/profile">
+          <button
+            onClick={(event) => this.handleClick(event)}
+            >Submit</button>
+        </Link>
       </div>
     )
   }
