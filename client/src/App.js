@@ -8,6 +8,7 @@ import ProfileCard from "./components/profileCard.js";
 import AccountList from "./components/accountList.js";
 import Profile from "./pages/Profile/profile";
 
+
 class App extends Component {
 	render() {
 		return (
