@@ -1,26 +1,52 @@
 import React, { Component } from "react";
 import TextField from '@material-ui/core/TextField';
-import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
+import Input from '@material-ui/core/Input';
+import { Link } from 'react-router-dom';
+import API from '../utils/API';
 
 class NewUser extends Component {
   state = {
-    name: "",
+    firstname: "",
+    lastname: "",
     email: "",
     password: "",
     goal: "",
-
   };
+
+
+  handleFormSubmit = (newUser) => {
+    API.saveUser({
+      firstname: this.state.firstname,
+      lastname: this.state.lastname,
+      email: this.state.email,
+      password: this.state.password,
+      goal: this.state.goal
+    })
+      .then(res => console.log(res.data))
+      // console.log("new user:" + newUser))
+      .catch(err => console.log(err));
+  };
+
+  // clickButton = event => {
+  //   event.preventDefault();
+  //   console.log("button clicked")
+  // };
 
   render() {
     return (
       <div className="container">
         <form className="newuser-form">
           <TextField
-            id="standard-name"
-            label="Name"
+            id="first-name"
+            label="First name"
             type="name"
-            placeholder="name"
-            value={this.state.name}
+            placeholder="First name"
+          />
+          <TextField
+            id="Last-name"
+            label="Last name"
+            type="name"
+            placeholder="Last name"
           />
           <br></br>
           <TextField
@@ -44,9 +70,9 @@ class NewUser extends Component {
             placeholder="Set an investment goal for yourself."
           />
         </form>
-        <Link to="/profile"><button>Login</button></Link>
+        <Link to="/api/signup"><button type="button" onClick={this.handleFormSubmit}>Create</button></Link>
       </div>
-    )
+    );
   }
 }
 
