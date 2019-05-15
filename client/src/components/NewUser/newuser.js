@@ -31,6 +31,22 @@ class NewUser extends Component {
   //   event.preventDefault();
   //   console.log("button clicked")
   // };
+  validateForm() {
+    return this.state.email.length > 0 && this.state.password.length > 0;
+  }
+
+  handleChange = event => {
+    this.setState({
+      [event.target.id]: event.target.value
+    });
+  }
+
+  handleSubmit = event => {
+    event.preventDefault();
+  }
+
+
+  
 
   render() {
     return (
@@ -71,6 +87,11 @@ class NewUser extends Component {
           />
         </form>
         <Link to="/api/signup"><button type="button" onClick={this.handleFormSubmit}>Create</button></Link>
+        <Link to="/profile">
+          <button
+            onClick={(event) => this.handleClick(event)}
+            >Submit</button>
+        </Link>
       </div>
     );
   }
