@@ -1,33 +1,102 @@
 import React, { Component } from "react";
 import TextField from '@material-ui/core/TextField';
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
+import "./Login.css";
 
-class LoginForm extends Component {
-  state = {
-    email: "",
-    password: "",
-  };
+export default class Login extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      email: "",
+      password: ""
+    };
+  }
+
+  validateForm() {
+    return this.state.email.length > 0 && this.state.password.length > 0;
+  }
+
+  handleChange = event => {
+    this.setState({
+      [event.target.id]: event.target.value
+    });
+  }
+
+  handleSubmit = event => {
+    event.preventDefault();
+  }
+
+  handleClick(event){
+    var apiBaseUrl = "http://localhost:3001/api/";
+    var self = this;
+
+    var payload={
+      "firstname": this.state.firstname,
+      "lastname": this.state.lastname,
+      "email": this.state.username,
+      "password": this.state.password,
+      "goal": this.state.goal
+    }
+
+    axios.post(apiBaseUrl+'login', payload)
+      .then(function (response) {
+        console.log(response);
+        
+        if(response.data.code == 200){
+          console.log("Login successfull");
+          // var uploadScreen=[];
+          // uploadScreen.push(<UploadScreen appContext={self.props.appContext}/>)
+          // self.props.appContext.setState({loginPage:[],uploadScreen:uploadScreen})
+        }
+        else if(response.data.code == 204){
+          console.log("Username password do not match");
+          alert("username password do not match")
+        } else{
+          console.log("Username does not exists");
+          alert("Username does not exist");
+        }
+      }).catch(function (error) {
+          console.log(error);
+      });
+  }
+
+ 
 
   render() {
     return (
-      <div className="container">
-        <form className="login-form">
-          <TextField
-            id="standard-email-input"
-            label="Email"
-            type="email"
-            name="email"
-            autoComplete="email"
-          />
-          <br></br>
-          <TextField
-            id="standard-password-input"
-            label="Password"
-            type="password"
-          />
-        </form>
-        <Link to="/profile"><button>New User</button></Link>
+      <div className="Login">
+        <form onSubmit={this.handleSubmit}>
+          <FormGroup controlId="email" bsSize="large">
+            <ControlLabel>Email</ControlLabel>
+            <FormControl
+              autoFocus
+              type="email"
+              value={this.state.email}
+              onChange={this.handleChange}
+            />
+          </FormGroup>
+          <FormGroup controlId="password" bsSize="large">
+            <ControlLabel>Password</ControlLabel>
+            <FormControl
+              value={this.state.password}
+              onChange={this.handleChange}
+              type="password"
+            />
+          </FormGroup>
+        <Link to="/profile">
+          <button 
+              block
+              bsSize="large"
+              disabled={!this.validateForm()} 
+              type="submit"
+              onClick={(event) => this.handleClick(event)}
+          >
+            Login
+          </button>
+        </Link>
         <Link to="/newuser"><button>New User</button></Link>
+        </form>
       </div>
     )
   }
