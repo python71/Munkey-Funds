@@ -105,7 +105,7 @@ class NewUser extends Component {
           <Link to="/profile">
 
             <button
-              onClick={this.handleFormSubmit}>Submit</button>
+              onClick={() => this.handleFormSubmit()}>Submit</button>
           </Link>
         </div>
       </div>
