@@ -31,14 +31,18 @@ module.exports = function (sequelize, DataTypes) {
     }
   });
 
-  User.prototype.validPassword = function(password) {
+  User.associate = function (models) {
+    User.hasMany(models.Stocks, {
+      onDelete: "cascade"
+    });
+  }
+
+  User.prototype.validPassword = function (password) {
     return bcrypt.compareSync(password, this.password);
   };
 
-  User.hook("beforeCreate", function(user) {
+  User.hook("beforeCreate", function (user) {
     user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
   });
-  return User;
-
   return User;
 }
