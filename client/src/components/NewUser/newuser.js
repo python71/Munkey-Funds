@@ -1,6 +1,9 @@
 import React, { Component } from "react";
-import TextField from '@material-ui/core/TextField';
-import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
+import { FormControl, InputLabel, Input } from '@material-ui/core/';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+import API from '../utils/API';
+import Header from '../header'
 
 class NewUser extends Component {
   state = {
@@ -9,9 +12,26 @@ class NewUser extends Component {
     email: "",
     password: "",
     goal: "",
-
   };
 
+
+  handleFormSubmit = (newUser) => {
+    API.saveUser({
+      firstname: this.state.firstname,
+      lastname: this.state.lastname,
+      email: this.state.email,
+      password: this.state.password,
+      goal: this.state.goal
+    })
+      .then(res => console.log(res.data))
+      // console.log("new user:" + newUser))
+      .catch(err => console.log(err));
+  };
+
+  // clickButton = event => {
+  //   event.preventDefault();
+  //   console.log("button clicked")
+  // };
   validateForm() {
     return this.state.email.length > 0 && this.state.password.length > 0;
   }
@@ -27,48 +47,69 @@ class NewUser extends Component {
   }
 
 
-  
-
   render() {
     return (
-      <div className="container">
-        <form className="newuser-form">
-          <TextField
-            id="standard-name"
-            label="Name"
-            type="name"
-            placeholder="name"
-            value={this.state.name}
-          />
+      <div>
+        <Header />
+        <div className="container">
+          <FormControl margin="normal" required>
+            <InputLabel>First Name</InputLabel>
+            <Input
+              id="first-name"
+              label="First name"
+              type="name"
+              placeholder="First name"
+            />
+          </FormControl>
           <br></br>
-          <TextField
-            id="standard-email-input"
-            label="Email"
-            type="email"
-            name="email"
-            autoComplete="email"
-          />
+          <FormControl margin="normal" required>
+            <InputLabel>Last Name</InputLabel>
+            <Input
+              id="Last-name"
+              label="Last name"
+              type="name"
+              placeholder="Last name"
+            />
+          </FormControl>
           <br></br>
-          <TextField
-            id="standard-password-input"
-            label="Password"
-            type="password"
-          />
+          <FormControl margin="normal" required>
+            <InputLabel>Email</InputLabel>
+            <Input
+              id="standard-email-input"
+              label="Email"
+              type="email"
+              name="email"
+              autoComplete="email"
+            />
+          </FormControl>
           <br></br>
-          <TextField
-            id="financial-goal"
-            label="Financial Goal"
-            type="text"
-            placeholder="Set an investment goal for yourself."
-          />
-        </form>
-        <Link to="/profile">
-          <button
-            onClick={(event) => this.handleClick(event)}
-            >Submit</button>
-        </Link>
+          <FormControl margin="normal" required>
+            <InputLabel>Password</InputLabel>
+            <Input
+              id="standard-password-input"
+              label="Password"
+              type="password"
+            />
+          </FormControl>
+          <br></br>
+          <FormControl margin="normal" fullwidth="true">
+            <InputLabel>Goal</InputLabel>
+            <Input
+              id="financial-goal"
+              label="Financial Goal"
+              type="text"
+              placeholder="Set an investment goal for yourself."
+            />
+          </FormControl>
+          <br></br><br></br>
+          <Link to="/profile">
+
+            <button
+              onClick={() => this.handleFormSubmit()}>Submit</button>
+          </Link>
+        </div>
       </div>
-    )
+    );
   }
 }
 
