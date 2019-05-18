@@ -3,6 +3,7 @@ import axios from "axios";
 export default {
   // Saves a book to the database
   saveUser: (userData) => {
+    console.log(userData);
     return axios.post("/api/signup", userData);
   },
   // Gets the user with the given id

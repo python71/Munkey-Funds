@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { FormControl, InputLabel, Input } from '@material-ui/core/';
-import axios from 'axios';
+// import axios from 'axios';
 import { Link } from 'react-router-dom';
 import API from '../utils/API';
 import Header from '../header'
@@ -102,7 +102,7 @@ class NewUser extends Component {
             />
           </FormControl>
           <br></br><br></br>
-          <Link to="/profile">
+          <Link to="/api/signup">
 
             <button
               onClick={() => this.handleFormSubmit()}>Submit</button>
