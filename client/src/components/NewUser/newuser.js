@@ -14,8 +14,11 @@ class NewUser extends Component {
     goal: ""
   };
 
-  handleFormSubmit = event => {
-    API.loadStockQuotes("fb").then(res => console.log(res));
+  handleFormSubmit = () => {
+    // console.log("Hitting API endpoint...");
+    // API.loadStockQuotes("fb")
+    //   .then(res => console.log(res))
+    //   .catch(err => console.log(err));
     API.saveUser({
       firstname: this.state.firstname,
       lastname: this.state.lastname,
