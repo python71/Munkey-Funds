@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import LoginForm from "./components/login/login";
 import "./components/style.css";
-import NewUser from "./components/NewUser/NewUser";
+import NewUser from "./components/NewUser/newuser";
 import { Route, BrowserRouter as Router } from "react-router-dom";
 import Profile from "./pages/Profile/profile";
 

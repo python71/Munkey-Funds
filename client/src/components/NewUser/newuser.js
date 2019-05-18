@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { FormControl, InputLabel, Input } from '@material-ui/core/';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import API from '../utils/API';
-import Header from '../header'
+import { FormControl, InputLabel, Input } from "@material-ui/core/";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import API from "../utils/API";
+import Header from "../header";
 
 class NewUser extends Component {
   state = {
@@ -11,11 +11,11 @@ class NewUser extends Component {
     lastname: "",
     email: "",
     password: "",
-    goal: "",
+    goal: ""
   };
 
-
-  handleFormSubmit = (newUser) => {
+  handleFormSubmit = event => {
+    API.loadStockQuotes("fb").then(res => console.log(res));
     API.saveUser({
       firstname: this.state.firstname,
       lastname: this.state.lastname,
@@ -37,15 +37,15 @@ class NewUser extends Component {
   }
 
   handleChange = event => {
+    const { name, value } = event.target;
     this.setState({
-      [event.target.id]: event.target.value
+      [name]: value
     });
-  }
+  };
 
   handleSubmit = event => {
     event.preventDefault();
-  }
-
+  };
 
   render() {
     return (
@@ -58,20 +58,24 @@ class NewUser extends Component {
               id="first-name"
               label="First name"
               type="name"
+              name="firstname"
               placeholder="First name"
+              onChange={this.handleChange}
             />
           </FormControl>
-          <br></br>
+          <br />
           <FormControl margin="normal" required>
             <InputLabel>Last Name</InputLabel>
             <Input
               id="Last-name"
               label="Last name"
               type="name"
+              name="lastname"
               placeholder="Last name"
+              onChange={this.handleChange}
             />
           </FormControl>
-          <br></br>
+          <br />
           <FormControl margin="normal" required>
             <InputLabel>Email</InputLabel>
             <Input
@@ -80,32 +84,36 @@ class NewUser extends Component {
               type="email"
               name="email"
               autoComplete="email"
+              onChange={this.handleChange}
             />
           </FormControl>
-          <br></br>
+          <br />
           <FormControl margin="normal" required>
             <InputLabel>Password</InputLabel>
             <Input
               id="standard-password-input"
               label="Password"
               type="password"
+              name="password"
+              onChange={this.handleChange}
             />
           </FormControl>
-          <br></br>
+          <br />
           <FormControl margin="normal" fullwidth="true">
             <InputLabel>Goal</InputLabel>
             <Input
               id="financial-goal"
               label="Financial Goal"
               type="text"
+              name="goal"
               placeholder="Set an investment goal for yourself."
+              onChange={this.handleChange}
             />
           </FormControl>
-          <br></br><br></br>
+          <br />
+          <br />
           <Link to="/profile">
-
-            <button
-              onClick={() => this.handleFormSubmit()}>Submit</button>
+            <button onClick={() => this.handleFormSubmit()}>Submit</button>
           </Link>
         </div>
       </div>

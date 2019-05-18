@@ -32,7 +32,7 @@ class Login extends Component {
   handleClick(event) {
     var apiBaseUrl = "http://localhost:3001/api/";
     var self = this;
-
+    
     var payload = {
       "firstname": this.state.firstname,
       "lastname": this.state.lastname,
