@@ -4,7 +4,9 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 const db = require("./models");
 const session = require("express-session")
+const apiRoutes = require("./routes/apiRoutes");
 const passport = require("passport")
+
 // const apiRoutes = require("./routes/apiRoutes");
 
 app.use(express.urlencoded({ extended: true }));
@@ -24,7 +26,7 @@ app.use(session({ secret: "keyboard cat", resave: true, saveUninitialized: true 
 app.use(passport.initialize());
 app.use(passport.session());
 
-// app.use("/", apiRoutes)
+app.use("/", apiRoutes)
 
 db.sequelize.sync().then(function () {
   app.listen(PORT, function () {
