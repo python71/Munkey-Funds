@@ -18,10 +18,11 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import Grid from "@material-ui/core/Grid";
 
 const styles = theme => ({
 	card: {
-		maxWidth: 400
+		maxWidth: 700
 	},
 	media: {
 		height: 0,
@@ -59,88 +60,90 @@ class ProfileCard extends Component {
 	render() {
 		const { classes } = this.props;
 		return (
-			<Card className={classes.card}>
-				<CardHeader
-					avatar={
-						<Avatar aria-label="Profile" className={classes.avatar}>
-							P
-						</Avatar>
-					}
-					action={
-						<IconButton>
-							<MoreVertIcon />
-						</IconButton>
-					}
-					title="Your Name Here"
-					subheader="Welcome Back!"
-				/>
-				<CardMedia className={classes.media} image="" title="Name" />
-				<CardContent>
-					<Typography component="p">
-						Your current financial goal is: To become more financially
-						salf-aware and improve my overall financial health.
-					</Typography>
-				</CardContent>
-				<CardActions className={classes.actions} disableActionSpacing>
-					<IconButton aria-label="Add to favorites">
-						<FavoriteIcon />
-					</IconButton>
-					<IconButton aria-label="Share">
-						<ShareIcon />
-					</IconButton>
-					<IconButton
-						className={classnames(classes.expand, {
-							[classes.expandOpen]: this.state.expanded
-						})}
-						onClick={this.handleExpandClick}
-						aria-expanded={this.state.expanded}
-						aria-label="Show more"
-					>
-						<ExpandMoreIcon />
-					</IconButton>
-				</CardActions>
-				<Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+			<Grid container justify="center">
+				<Card className={classes.card}>
+					<CardHeader
+						avatar={
+							<Avatar aria-label="Profile" className={classes.avatar}>
+								P
+							</Avatar>
+						}
+						action={
+							<IconButton>
+								<MoreVertIcon />
+							</IconButton>
+						}
+						title="Your Name Here"
+						subheader="Welcome Back!"
+					/>
+					<CardMedia className={classes.media} image="" title="Name" />
 					<CardContent>
-						<Typography paragraph>Method:</Typography>
-						<Typography paragraph>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-							eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-							enim ad minim veniam, quis nostrud exercitation ullamco laboris
-							nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-							reprehenderit in voluptate velit esse cillum dolore eu fugiat
-							nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-							sunt in culpa qui officia deserunt mollit anim id est laborum.
-						</Typography>
-						<Typography paragraph>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-							eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-							enim ad minim veniam, quis nostrud exercitation ullamco laboris
-							nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-							reprehenderit in voluptate velit esse cillum dolore eu fugiat
-							nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-							sunt in culpa qui officia deserunt mollit anim id est laborum.
-						</Typography>
-						<Typography paragraph>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-							eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-							enim ad minim veniam, quis nostrud exercitation ullamco laboris
-							nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-							reprehenderit in voluptate velit esse cillum dolore eu fugiat
-							nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-							sunt in culpa qui officia deserunt mollit anim id est laborum.
-						</Typography>
-						<Typography>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-							eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-							enim ad minim veniam, quis nostrud exercitation ullamco laboris
-							nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-							reprehenderit in voluptate velit esse cillum dolore eu fugiat
-							nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-							sunt in culpa qui officia deserunt mollit anim id est laborum.
+						<Typography component="p">
+							Your current financial goal is: To become more financially
+							salf-aware and improve my overall financial health.
 						</Typography>
 					</CardContent>
-				</Collapse>
-			</Card>
+					<CardActions className={classes.actions} disableActionSpacing>
+						<IconButton aria-label="Add to favorites">
+							<FavoriteIcon />
+						</IconButton>
+						<IconButton aria-label="Share">
+							<ShareIcon />
+						</IconButton>
+						<IconButton
+							className={classnames(classes.expand, {
+								[classes.expandOpen]: this.state.expanded
+							})}
+							onClick={this.handleExpandClick}
+							aria-expanded={this.state.expanded}
+							aria-label="Show more"
+						>
+							<ExpandMoreIcon />
+						</IconButton>
+					</CardActions>
+					<Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+						<CardContent>
+							<Typography paragraph>Method:</Typography>
+							<Typography paragraph>
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+								eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+								enim ad minim veniam, quis nostrud exercitation ullamco laboris
+								nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+								in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+								nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+								sunt in culpa qui officia deserunt mollit anim id est laborum.
+							</Typography>
+							<Typography paragraph>
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+								eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+								enim ad minim veniam, quis nostrud exercitation ullamco laboris
+								nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+								in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+								nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+								sunt in culpa qui officia deserunt mollit anim id est laborum.
+							</Typography>
+							<Typography paragraph>
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+								eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+								enim ad minim veniam, quis nostrud exercitation ullamco laboris
+								nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+								in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+								nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+								sunt in culpa qui officia deserunt mollit anim id est laborum.
+							</Typography>
+							<Typography>
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+								eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+								enim ad minim veniam, quis nostrud exercitation ullamco laboris
+								nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+								in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+								nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+								sunt in culpa qui officia deserunt mollit anim id est laborum.
+							</Typography>
+						</CardContent>
+					</Collapse>
+				</Card>
+			</Grid>
 		);
 	}
 }
