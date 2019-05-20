@@ -34,13 +34,10 @@ class Login extends Component {
     var self = this;
     
     var payload = {
-      "firstname": this.state.firstname,
-      "lastname": this.state.lastname,
-      "email": this.state.username,
+      "email": this.state.email,
       "password": this.state.password,
-      "goal": this.state.goal
     }
-
+    console.log(payload)
     axios.post(apiBaseUrl + 'login', payload)
       .then(function (response) {
         console.log(response);
@@ -74,7 +71,7 @@ class Login extends Component {
             <FormControl margin="normal" required="true">
               <InputLabel>Email</InputLabel>
               <Input
-                id="standard-email-input"
+                id="email"
                 label="Email"
                 autoFocus
                 type="email"

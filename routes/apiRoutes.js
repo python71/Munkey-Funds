@@ -24,7 +24,7 @@ routes.post("/api/signup", function(req, res) {
 
 routes.post("/api/stocks", function(req, res) {
     const { symbol } = req.body;
-    console.log(symbol);
+    console.log(req.body);
     let data = [];
     axios
       .get(`https://api.iextrading.com/1.0/stock/${symbol}/chart/ytd`)
@@ -45,5 +45,9 @@ routes.post("/api/stocks", function(req, res) {
       })
       .catch(err => console.log("You had an error."));
   });
+
+  // routes.post("/api/login", function(req, res) {
+  //   console.log("LOGIN")
+  // })
 
 module.exports = routes;

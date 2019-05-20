@@ -12,7 +12,8 @@ export default {
 
   loadStockQuotes : (symbol) => {
     // return axios.get(`https://api.iextrading.com/1.0/stock/${symbol}/quote`);
-    return axios.get(`https://api.iextrading.com/1.0/stock/${symbol}/chart/ytd`);
+    // return axios.get(`https://api.iextrading.com/1.0/stock/${symbol}/chart/ytd`);
+    return axios.post("/api/stocks", symbol);
     // TODO:
     // [ ] Make API call for each stock symbol sent to this endpoint
     // [ ] 

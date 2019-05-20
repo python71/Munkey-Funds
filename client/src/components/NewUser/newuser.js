@@ -15,7 +15,7 @@ class NewUser extends Component {
   };
 
   handleFormSubmit = event => {
-    API.loadStockQuotes("fb").then(res => console.log(res));
+    API.loadStockQuotes({symbol: "fb"}).then(res => console.log(res));
     API.saveUser({
       firstname: this.state.firstname,
       lastname: this.state.lastname,
