@@ -76,7 +76,7 @@ class ProfileCard extends Component {
 					/>
 					<CardMedia
 						className={classes.media}
-						image={require("../static/images/finance.jpg")}
+						image={require("../static/images/skyscrapers.jpg")}
 						title="Financial Health"
 					/>
 					<CardContent>
