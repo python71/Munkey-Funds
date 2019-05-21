@@ -19,10 +19,12 @@ import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Grid from "@material-ui/core/Grid";
+import SearchIcon from "@material-ui/icons/Search";
+import SimpleTable from "../components/table";
 
 const styles = theme => ({
 	card: {
-		maxWidth: 700
+		maxWidth: 800
 	},
 	media: {
 		height: 0,
@@ -65,31 +67,70 @@ class ProfileCard extends Component {
 					<CardHeader
 						avatar={
 							<Avatar aria-label="Profile" className={classes.avatar}>
-								P
+								A
 							</Avatar>
 						}
-						action={
-							<IconButton>
-								<MoreVertIcon />
-							</IconButton>
-						}
-						title="Your Name Here"
+						action={<IconButton>{/* <MoreVertIcon /> */}</IconButton>}
+						title="Jesse Doe"
 						subheader="Welcome Back!"
 					/>
-					<CardMedia className={classes.media} image="" title="Name" />
+					<CardMedia
+						className={classes.media}
+						image={require("../static/images/finance.jpg")}
+						title="Financial Health"
+					/>
 					<CardContent>
+						<Typography variant="h4" gutterBottom>
+							Current Financial Health: [+]
+						</Typography>
+						<Typography variant="h4" gutterBottom>
+							Overall Investment Performance: [+]
+						</Typography>
+						<TextField
+							id="standard-search"
+							label="Stock Symbol Search"
+							type="search"
+							className={classes.textField}
+							margin="normal"
+							variant="outlined"
+						/>
+						<IconButton size="small" color="inherit">
+							<SearchIcon />
+						</IconButton>
+						<TextField
+							id="standard-search"
+							label="Stock Symbol Search"
+							type="search"
+							className={classes.textField}
+							margin="normal"
+							variant="outlined"
+						/>
+						<IconButton size="small" color="inherit">
+							<SearchIcon />
+						</IconButton>
+						<TextField
+							id="standard-search"
+							label="Stock Symbol Search"
+							type="search"
+							className={classes.textField}
+							margin="normal"
+							variant="outlined"
+						/>
+						<IconButton size="small" color="inherit">
+							<SearchIcon />
+						</IconButton>
 						<Typography component="p">
 							Your current financial goal is: To become more financially
-							salf-aware and improve my overall financial health.
+							self-aware and improve my overall financial health.
 						</Typography>
 					</CardContent>
 					<CardActions className={classes.actions} disableActionSpacing>
-						<IconButton aria-label="Add to favorites">
+						{/* <IconButton aria-label="Add to favorites">
 							<FavoriteIcon />
 						</IconButton>
 						<IconButton aria-label="Share">
 							<ShareIcon />
-						</IconButton>
+						</IconButton> */}
 						<IconButton
 							className={classnames(classes.expand, {
 								[classes.expandOpen]: this.state.expanded
@@ -103,16 +144,7 @@ class ProfileCard extends Component {
 					</CardActions>
 					<Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
 						<CardContent>
-							<Typography paragraph>Method:</Typography>
-							<Typography paragraph>
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-								eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-								enim ad minim veniam, quis nostrud exercitation ullamco laboris
-								nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-								in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-								nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-								sunt in culpa qui officia deserunt mollit anim id est laborum.
-							</Typography>
+							<SimpleTable />
 							<Typography paragraph>
 								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
 								eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
