@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { Link, BrowserRouter as Router } from 'react-router-dom';
 import "./Login.css";
-import { FormControl, InputLabel, Input } from '@material-ui/core/';
+import { FormControl, InputLabel, Input, } from '@material-ui/core/';
 import axios from 'axios';
 import Header from '../header'
+import API from "../utils/API";
+import {sizing } from '@material-ui/system';
 
 class Login extends Component {
   constructor(props) {
@@ -27,41 +29,42 @@ class Login extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    console.log("button clicked!");
   }
 
-  handleClick(event) {
-    var apiBaseUrl = "http://localhost:3001/api/";
-    var self = this;
-    
-    var payload = {
-      "firstname": this.state.firstname,
-      "lastname": this.state.lastname,
-      "email": this.state.username,
-      "password": this.state.password,
-      "goal": this.state.goal
-    }
+  // handleClick(event) {
+  //   var apiBaseUrl = "http://localhost:3001/api/";
+  //   var self = this;
 
-    axios.post(apiBaseUrl + 'login', payload)
-      .then(function (response) {
-        console.log(response);
+  //   var payload = {
+  //     "firstname": this.state.firstname,
+  //     "lastname": this.state.lastname,
+  //     "email": this.state.username,
+  //     "password": this.state.password,
+  //     "goal": this.state.goal
+  //   }
 
-        if (response.data.code == 200) {
-          console.log("Login successfull");
-          // var uploadScreen=[];
-          // uploadScreen.push(<UploadScreen appContext={self.props.appContext}/>)
-          // self.props.appContext.setState({loginPage:[],uploadScreen:uploadScreen})
-        }
-        else if (response.data.code == 204) {
-          console.log("Username password do not match");
-          alert("username password do not match")
-        } else {
-          console.log("Username does not exists");
-          alert("Username does not exist");
-        }
-      }).catch(function (error) {
-        console.log(error);
-      });
-  }
+  //   axios.post(apiBaseUrl + 'login', payload)
+  //     .then(function (response) {
+  //       console.log(response);
+
+  //       if (response.data.code === 200) {
+  //         console.log("Login successfull");
+  //         // var uploadScreen=[];
+  //         // uploadScreen.push(<UploadScreen appContext={self.props.appContext}/>)
+  //         // self.props.appContext.setState({loginPage:[],uploadScreen:uploadScreen})
+  //       }
+  //       else if (response.data.code === 204) {
+  //         console.log("Username password do not match");
+  //         alert("username password do not match")
+  //       } else {
+  //         console.log("Username does not exists");
+  //         alert("Username does not exist");
+  //       }
+  //     }).catch(function (error) {
+  //       console.log(error);
+  //     });
+  // }
 
 
 
@@ -71,7 +74,7 @@ class Login extends Component {
         <Header />
         <div className="Login">
           <form onSubmit={this.handleSubmit}>
-            <FormControl margin="normal" required="true">
+            <FormControl margin="normal" required={true} width='60%'>
               <InputLabel>Email</InputLabel>
               <Input
                 id="standard-email-input"
@@ -82,7 +85,8 @@ class Login extends Component {
                 onChange={this.handleChange}
               />
             </FormControl>
-            <FormControl margin="normal" required="true">
+            <br />
+            <FormControl margin="normal" required={true}>
               <InputLabel>Password</InputLabel>
               <Input
                 id="password"
@@ -96,7 +100,7 @@ class Login extends Component {
               <button
                 // disabled={!this.validateForm()}
                 type="submit"
-                onClick={(event) => this.handleClick(event)}
+                onClick={(event) => this.handleSubmit(event)}
               >
                 Login
           </button>

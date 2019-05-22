@@ -3,11 +3,10 @@
   "version": "1.0.0",
   "description": "Mern Demo",
   "main": "server.js",
-  "proxy": "localhost:3001",
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
     "start:prod": "node server.js",
-    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
+    "start:dev": "nodemon --ignore 'client/*' & npm run client",
     "client": "cd client && npm run start",
     "seed": "node scripts/seedDB.js",
     "install": "cd client && npm install",
@@ -18,7 +17,7 @@
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^4.1.0",
-    "nodemon": "^1.18.7"
+    "kill-port": "^1.5.0"
   },
   "dependencies": {
     "@material-ui/core": "^3.9.3",
