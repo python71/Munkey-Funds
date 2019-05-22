@@ -78,7 +78,7 @@ class Login extends Component {
                 label="Email"
                 autoFocus
                 type="email"
-                // value={this.state.email}
+                value={this.state.email}
                 onChange={this.handleChange}
               />
             </FormControl>
@@ -86,7 +86,7 @@ class Login extends Component {
               <InputLabel>Password</InputLabel>
               <Input
                 id="password"
-                // value={this.state.password}
+                value={this.state.password}
                 onChange={this.handleChange}
                 type="password"
               />
