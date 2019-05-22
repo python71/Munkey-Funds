@@ -19,6 +19,7 @@ import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Grid from "@material-ui/core/Grid";
+import StockChart from './stockChart';
 
 const styles = theme => ({
 	card: {
@@ -103,6 +104,7 @@ class ProfileCard extends Component {
 					</CardActions>
 					<Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
 						<CardContent>
+							<StockChart />
 							<Typography paragraph>Method:</Typography>
 							<Typography paragraph>
 								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
