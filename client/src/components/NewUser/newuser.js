@@ -16,16 +16,18 @@ class NewUser extends Component {
 
   handleFormSubmit = event => {
     API.loadStockQuotes({symbol: "fb"}).then(res => console.log(res));
-    API.saveUser({
-      firstname: this.state.firstname,
-      lastname: this.state.lastname,
-      email: this.state.email,
-      password: this.state.password,
-      goal: this.state.goal
-    })
-      .then(res => console.log(res.data))
-      // console.log("new user:" + newUser))
-      .catch(err => console.log(err));
+    API.loadChartInfo({symbol: "fb"}).then(res => console.log(res));
+    // API.loadMultipleQuotes({symbol: "bidu"}).then(res => console.log(res));
+    // API.saveUser({
+    //   firstname: this.state.firstname,
+    //   lastname: this.state.lastname,
+    //   email: this.state.email,
+    //   password: this.state.password,
+    //   goal: this.state.goal
+    // })
+    //   .then(res => console.log(res.data))
+    //   // console.log("new user:" + newUser))
+    //   .catch(err => console.log(err));
   };
 
   // clickButton = event => {

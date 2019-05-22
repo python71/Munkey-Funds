@@ -21,7 +21,7 @@ routes.post("/api/signup", function(req, res) {
       // res.status(422).json(err.errors[0].message);
     });
 });
-
+// get chart info
 routes.post("/api/stocks", function(req, res) {
     const { symbol } = req.body;
     console.log(req.body);
@@ -39,15 +39,51 @@ routes.post("/api/stocks", function(req, res) {
             y: item.close
           });
         });
-        console.log(stockData);
+        console.log(response);
         data.push(stockData);
         res.json(data);
       })
-      .catch(err => console.log("You had an error."));
+      .catch(err => console.log(err));
   });
+
+  // stock lookup
+  routes.post("/api/chart", function(req, res) {
+    const { symbol } = req.body;
+    axios
+    .get(`https://api.iextrading.com/1.0/stock/${symbol}/quote`)
+    .then(response => {
+      res.json(response.data)
+      });
+  })
+
+    // multiple stock lookup
+    routes.post("/api/quotes", function(req, res) {
+      const { symbol } = req.body;
+      axios
+      .get(`https://api.iextrading.com/1.0/stock/market/batch?symbols=${symbol}&types=quote,news,chart`)
+      .then(response => {
+        res.json(response.data)
+        });
+    })
 
   // routes.post("/api/login", function(req, res) {
   //   console.log("LOGIN")
   // })
+
+  // need to create a DB post if user saves a stock
+  //   db.Stocks.create({
+  //     stock: response.data.symbol,
+  //     value: response.data.open,
+  //     UserId: "1"
+  // })
+  //   .then(function(data) {
+  //     console.log(data);
+  //     // res.redirect(307, "/api/login");
+  //   })
+  //   .catch(function(err) {
+  //     console.log(err);
+  //     res.json(err);
+  //     // res.status(422).json(err.errors[0].message);
+  //   });
 
 module.exports = routes;
