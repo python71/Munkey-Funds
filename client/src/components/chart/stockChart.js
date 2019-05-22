@@ -68,58 +68,59 @@ class StockChart extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      // dummy data to create the graph structure while waiting for the api request
       data: [
         {
           "id": "stock",
           // "color": "hsl(255, 70%, 50%)",
           "data": [
             {
-              "x": "string",
-              "y": 15
+              "x": "a",
+              "y": 1
             },
             {
-              "x": "helicopter",
-              "y": 10
+              "x": "b",
+              "y": 1
             },
             {
-              "x": "boat",
-              "y": 131
+              "x": "c",
+              "y": 1
             },
             {
-              "x": "train",
-              "y": 50
+              "x": "d",
+              "y": 1
             },
             {
-              "x": "subway",
-              "y": 254
+              "x": "e",
+              "y": 1
             },
             {
-              "x": "bus",
-              "y": 139
+              "x": "f",
+              "y": 1
             },
             {
-              "x": "car",
-              "y": 170
+              "x": "g",
+              "y": 1
             },
             {
-              "x": "moto",
-              "y": 128
+              "x": "h",
+              "y": 1
             },
             {
-              "x": "bicycle",
-              "y": 195
+              "x": "i",
+              "y": 1
             },
             {
-              "x": "horse",
-              "y": 150
+              "x": "j",
+              "y": 1
             },
             {
-              "x": "skateboard",
-              "y": 271
+              "x": "k",
+              "y": 1
             },
             {
-              "x": "others",
-              "y": 57
+              "x": "l",
+              "y": 2
             }
           ]
         }
@@ -155,7 +156,7 @@ class StockChart extends Component {
             tickSize: 0,
             tickPadding: 0,
             tickRotation: 90,
-            legend: 'date',
+            legend: '',
             legendOffset: 70,
             legendPosition: 'middle'
           }}
