@@ -22,29 +22,29 @@ import Grid from "@material-ui/core/Grid";
 import StockChart from './stockChart';
 
 const styles = theme => ({
-	card: {
-		maxWidth: 700
-	},
-	media: {
-		height: 0,
-		paddingTop: "56.25%" // 16:9
-	},
-	actions: {
-		display: "flex"
-	},
-	expand: {
-		transform: "rotate(0deg)",
-		marginLeft: "auto",
-		transition: theme.transitions.create("transform", {
-			duration: theme.transitions.duration.shortest
-		})
-	},
-	expandOpen: {
-		transform: "rotate(180deg)"
-	},
-	avatar: {
-		backgroundColor: red[500]
-	}
+  card: {
+    maxWidth: 700
+  },
+  media: {
+    height: 0,
+    paddingTop: "56.25%" // 16:9
+  },
+  actions: {
+    display: "flex"
+  },
+  expand: {
+    transform: "rotate(0deg)",
+    marginLeft: "auto",
+    transition: theme.transitions.create("transform", {
+      duration: theme.transitions.duration.shortest
+    })
+  },
+  expandOpen: {
+    transform: "rotate(180deg)"
+  },
+  avatar: {
+    backgroundColor: red[500]
+  }
 });
 
 // let profilePic = {
@@ -54,60 +54,61 @@ const styles = theme => ({
 // };
 
 class ProfileCard extends Component {
-	state = { expanded: false };
-	handleExpandClick = () => {
-		this.setState(state => ({ expanded: !state.expanded }));
-	};
-	render() {
-		const { classes } = this.props;
-		return (
-			<Grid container justify="center">
-				<Card className={classes.card}>
-					<CardHeader
-						avatar={
-							<Avatar aria-label="Profile" className={classes.avatar}>
-								P
+  state = { expanded: false };
+  handleExpandClick = () => {
+    this.setState(state => ({ expanded: !state.expanded }));
+  };
+  render() {
+    const { classes } = this.props;
+    return (
+      <Grid container justify="center">
+        <Card className={classes.card}>
+          <CardHeader
+            avatar={
+              <Avatar aria-label="Profile" className={classes.avatar}>
+                P
 							</Avatar>
-						}
-						action={
-							<IconButton>
-								<MoreVertIcon />
-							</IconButton>
-						}
-						title="Your Name Here"
-						subheader="Welcome Back!"
-					/>
-					<CardMedia className={classes.media} image="" title="Name" />
-					<CardContent>
-						<Typography component="p">
-							Your current financial goal is: To become more financially
+            }
+            action={
+              <IconButton>
+                <MoreVertIcon />
+              </IconButton>
+            }
+            title="Your Name Here"
+            subheader="Welcome Back!"
+          />
+          <CardMedia className={classes.media} image="" title="Name" />
+          <CardContent>
+            <Typography component="p">
+              Your current financial goal is: To become more financially
 							salf-aware and improve my overall financial health.
 						</Typography>
-					</CardContent>
-					<CardActions className={classes.actions} disableActionSpacing>
-						<IconButton aria-label="Add to favorites">
-							<FavoriteIcon />
-						</IconButton>
-						<IconButton aria-label="Share">
-							<ShareIcon />
-						</IconButton>
-						<IconButton
-							className={classnames(classes.expand, {
-								[classes.expandOpen]: this.state.expanded
-							})}
-							onClick={this.handleExpandClick}
-							aria-expanded={this.state.expanded}
-							aria-label="Show more"
-						>
-							<ExpandMoreIcon />
-						</IconButton>
-					</CardActions>
-					<Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-						<CardContent>
-							<StockChart />
-							<Typography paragraph>Method:</Typography>
-							<Typography paragraph>
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          </CardContent>
+          <CardActions className={classes.actions} disableActionSpacing>
+            <IconButton aria-label="Add to favorites">
+              <FavoriteIcon />
+            </IconButton>
+            <IconButton aria-label="Share">
+              <ShareIcon />
+            </IconButton>
+            <IconButton
+              className={classnames(classes.expand, {
+                [classes.expandOpen]: this.state.expanded
+              })}
+              onClick={this.handleExpandClick}
+              aria-expanded={this.state.expanded}
+              aria-label="Show more"
+            >
+              <ExpandMoreIcon />
+            </IconButton>
+          </CardActions>
+          <StockChart />
+          <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+            <CardContent>
+
+              <Typography paragraph>Method:</Typography>
+              <Typography paragraph>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
 								eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
 								enim ad minim veniam, quis nostrud exercitation ullamco laboris
 								nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
@@ -115,8 +116,8 @@ class ProfileCard extends Component {
 								nulla pariatur. Excepteur sint occaecat cupidatat non proident,
 								sunt in culpa qui officia deserunt mollit anim id est laborum.
 							</Typography>
-							<Typography paragraph>
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              <Typography paragraph>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
 								eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
 								enim ad minim veniam, quis nostrud exercitation ullamco laboris
 								nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
@@ -124,8 +125,8 @@ class ProfileCard extends Component {
 								nulla pariatur. Excepteur sint occaecat cupidatat non proident,
 								sunt in culpa qui officia deserunt mollit anim id est laborum.
 							</Typography>
-							<Typography paragraph>
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              <Typography paragraph>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
 								eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
 								enim ad minim veniam, quis nostrud exercitation ullamco laboris
 								nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
@@ -133,8 +134,8 @@ class ProfileCard extends Component {
 								nulla pariatur. Excepteur sint occaecat cupidatat non proident,
 								sunt in culpa qui officia deserunt mollit anim id est laborum.
 							</Typography>
-							<Typography>
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              <Typography>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
 								eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
 								enim ad minim veniam, quis nostrud exercitation ullamco laboris
 								nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
@@ -142,16 +143,16 @@ class ProfileCard extends Component {
 								nulla pariatur. Excepteur sint occaecat cupidatat non proident,
 								sunt in culpa qui officia deserunt mollit anim id est laborum.
 							</Typography>
-						</CardContent>
-					</Collapse>
-				</Card>
-			</Grid>
-		);
-	}
+            </CardContent>
+          </Collapse>
+        </Card>
+      </Grid>
+    );
+  }
 }
 
 ProfileCard.propTypes = {
-	classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(ProfileCard);
