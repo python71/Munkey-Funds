@@ -1,10 +1,21 @@
+let canvas = this.refs.canvas
+let ctx = canvas.getContext("2d")
+let canvas = this.refs.canvas
 
-export function graph({children}) {
+class Canvas extends React.Component {
+    componentDidMount() {
+        const canvas = this.refs.canvas
+        const ctx = canvas.getContext("2d")
+        const img = this.refs.image
+        img.onload = () => {
+          ctx.drawImage(img, 0, 0)
+          ctx.font = "40px Courier"
+          ctx.fillText(this.props.text, 210, 75)
+        }
+      }
 
-   
-    let N = label ? label : [...Array(Math.max(data1.length, data2.length)).keys()];
-
-    let config = {
+    config() {
+        
         type: 'line',
         data: {
             labels: N,
@@ -55,10 +66,10 @@ export function graph({children}) {
         }
     };
 
-
     return (
+
         <div>
-            <canvas id="prediction-graph"></canvas>
+            <canvas ref="canvas" width={640} height={425} />
         </div>
 
     );
