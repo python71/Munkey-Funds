@@ -21,6 +21,8 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Grid from "@material-ui/core/Grid";
 import SearchIcon from "@material-ui/icons/Search";
 import SimpleTable from "../components/table";
+import FormControl from "@material-ui/core/FormControl";
+import API from "./utils/API";
 
 const styles = theme => ({
 	card: {
@@ -48,17 +50,21 @@ const styles = theme => ({
 	}
 });
 
-// let profilePic = {
-// 	src: "",
-// 	alt: "Face",
-// 	width: "150px"
-// };
-
 class ProfileCard extends Component {
-	state = { expanded: false };
+	state = { expanded: false, searchOne: "", searchTwo: "", searchThree: "" };
 	handleExpandClick = () => {
 		this.setState(state => ({ expanded: !state.expanded }));
 	};
+
+	setSymbol = e => {
+		// e.preventDefault();
+		this.setState({ searchOne: e.target.value });
+		console.log(this.state.searchOne);
+		API.loadStockQuotes({ symbol: this.state.searchOne }).then(res =>
+			console.log(res)
+		);
+	};
+
 	render() {
 		const { classes } = this.props;
 		return (
@@ -86,51 +92,54 @@ class ProfileCard extends Component {
 						<Typography variant="h4" gutterBottom>
 							Overall Investment Performance: [+]
 						</Typography>
-						<TextField
-							id="standard-search"
-							label="Stock Symbol Search"
-							type="search"
-							className={classes.textField}
-							margin="normal"
-							variant="outlined"
-						/>
-						<IconButton size="small" color="inherit">
-							<SearchIcon />
-						</IconButton>
-						<TextField
-							id="standard-search"
-							label="Stock Symbol Search"
-							type="search"
-							className={classes.textField}
-							margin="normal"
-							variant="outlined"
-						/>
-						<IconButton size="small" color="inherit">
-							<SearchIcon />
-						</IconButton>
-						<TextField
-							id="standard-search"
-							label="Stock Symbol Search"
-							type="search"
-							className={classes.textField}
-							margin="normal"
-							variant="outlined"
-						/>
-						<IconButton size="small" color="inherit">
-							<SearchIcon />
-						</IconButton>
+						<FormControl>
+							<TextField
+								id="searchOne"
+								label="Stock Symbol Search"
+								type="search"
+								name="searchOne"
+								value={this.state.searchOne}
+								className={classes.textField}
+								margin="normal"
+								variant="outlined"
+								onChange={this.setSymbol}
+							/>
+							{/* <IconButton size="small" color="inherit">
+								<SearchIcon />
+							</IconButton> */}
+							{/* <TextField
+								id="standard-search2"
+								label="Stock Symbol Search"
+								type="search"
+								name="searchTwo"
+								value={this.state.searchTwo}
+								className={classes.textField}
+								margin="normal"
+								variant="outlined"
+							/>
+							<IconButton size="small" color="inherit">
+								<SearchIcon />
+							</IconButton> */}
+							{/* <TextField
+								id="standard-search3"
+								label="Stock Symbol Search"
+								type="search"
+								name="searchThree"
+								value={this.state.searchThree}
+								className={classes.textField}
+								margin="normal"
+								variant="outlined"
+							/>
+							<IconButton size="small" color="inherit">
+								<SearchIcon />
+							</IconButton> */}
+						</FormControl>
 						<Typography component="p">
 							Your current financial goal is: To become more financially
 							self-aware and improve my overall financial health.
 						</Typography>
 					</CardContent>
 					<CardActions className={classes.actions} disableActionSpacing>
-						{/* <IconButton aria-label="Add to favorites">
-							<FavoriteIcon />
-						</IconButton>
-						<IconButton aria-label="Share">
-							<ShareIcon />
-						</IconButton> */}
 						<IconButton
 							className={classnames(classes.expand, {
 								[classes.expandOpen]: this.state.expanded

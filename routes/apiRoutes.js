@@ -21,7 +21,6 @@ routes.post("/api/signup", function(req, res) {
 			// res.status(422).json(err.errors[0].message);
 		});
 });
-
 routes.post("/api/stocks", function(req, res) {
 	const { symbol } = req.body;
 	console.log(symbol);
@@ -45,5 +44,16 @@ routes.post("/api/stocks", function(req, res) {
 		})
 		.catch(err => console.log(err));
 });
-
+routes.post("/api/quote", function(req, res) {
+	console.log("/api/quote endpoint hit");
+	const { symbol } = req.body;
+	console.log(symbol);
+	let data = [];
+	axios
+		.get(`https://api.iextrading.com/1.0/stock/${symbol}/quote`)
+		.then(response => {
+			res.json(response.data);
+		});
+	// .catch(err => console.log(err));
+});
 module.exports = routes;
