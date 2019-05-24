@@ -15,17 +15,17 @@ class NewUser extends Component {
   };
 
   handleFormSubmit = event => {
-    API.loadStockQuotes("fb").then(res => console.log(res));
-    API.saveUser({
-      firstname: this.state.firstname,
-      lastname: this.state.lastname,
-      email: this.state.email,
-      password: this.state.password,
-      goal: this.state.goal
-    })
-      .then(res => console.log(res.data))
-      // console.log("new user:" + newUser))
-      .catch(err => console.log(err));
+    API.loadStockQuotes({ symbol: "FB" }).then(res => console.log(res));
+    // API.saveUser({
+    // 	firstname: this.state.firstname,
+    // 	lastname: this.state.lastname,
+    // 	email: this.state.email,
+    // 	password: this.state.password,
+    // 	goal: this.state.goal
+    // })
+    // 	.then(res => console.log(res.data))
+    // 	// console.log("new user:" + newUser))
+    // 	.catch(err => console.log(err));
   };
 
   // clickButton = event => {
