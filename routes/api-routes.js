@@ -1,6 +1,6 @@
 // Requiring our models and passport as we've configured it
 var db = require("../models");
-var passport = require("../config/passport");
+var passport = require("../passport");
 
 module.exports = function(app) {
   // Using the passport.authenticate middleware with our local strategy.
@@ -55,5 +55,17 @@ module.exports = function(app) {
       });
     }
   });
-
+  // app.post('/api/testlogin', (req, res, next)=> {
+  //   console.log('server post username: ');
+  //   console.log(req.body)
+  //   next()
+  // },
+  // passsport.authenticate('local'),
+  // (req, res) => {
+  //   console.log('logged in', req.user);
+  //   var userInfo = {
+  //     username: req.user.username
+  //   };
+  //   res.send(userInfo);
+  // })
 };

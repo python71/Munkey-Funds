@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { FormControl, InputLabel, Input } from "@material-ui/core/";
-import axios from "axios";
+// import axios from "axios";
 import { Link } from "react-router-dom";
 import API from "../utils/API";
 import Header from "../header";
@@ -15,7 +15,10 @@ class NewUser extends Component {
   };
 
   handleFormSubmit = event => {
-    API.loadStockQuotes("fb").then(res => console.log(res));
+    // API.loadMultipleQuotes("fb,bidu").then(res => console.log(res));
+    // API.loadStockQuotes("fb").then(res => console.log(res));
+    console.log("sign-up-form, username: ");
+    console.log(this.state.email);
     API.saveUser({
       firstname: this.state.firstname,
       lastname: this.state.lastname,
@@ -23,15 +26,27 @@ class NewUser extends Component {
       password: this.state.password,
       goal: this.state.goal
     })
-      .then(res => console.log(res.data))
-      // console.log("new user:" + newUser))
-      .catch(err => console.log(err));
+    .then(response => {
+      console.log(response)
+      if (response.data) {
+        console.log('successful signup')
+        this.setState({
+          redirectTo: '/'
+        })
+      }
+      else {
+        console.log('Sign-up error');
+      }
+    }).catch(error => {
+      console.log('Sign up server error: ')
+      console.log(error);
+    })
   };
 
-  // clickButton = event => {
-  //   event.preventDefault();
-  //   console.log("button clicked")
-  // };
+  clickButton = event => {
+    event.preventDefault();
+    console.log("button clicked")
+  };
   validateForm() {
     return this.state.email.length > 0 && this.state.password.length > 0;
   }
@@ -44,32 +59,32 @@ class NewUser extends Component {
   };
 
   handleSubmit = event => {
-    event.preventDefault();
+    // event.preventDefault();
     console.log("sign-up-form, username: ");
     console.log(this.state.username);
-    //request to server here
-    axios.post('/', {
-      firstname: this.state.username,
-      lastname: this.state.lastname,
-      email: this.state.email,
-      password: this.state.password,
-      goal: this.state.goal
-    })
-      .then(response => {
-        console.log(response)
-        if (response.data) {
-          console.log('successful signup')
-          this.setState({
-            redirectTo: '/'
-          })
-        }
-        else {
-          console.log('Sign-up error');
-        }
-      }).catch(error => {
-        console.log('Sign up server error: ')
-        console.log(error);
-      })
+    // //request to server here
+    // API.saveUser({
+    //   firstname: this.state.username,
+    //   lastname: this.state.lastname,
+    //   email: this.state.email,
+    //   password: this.state.password,
+    //   goal: this.state.goal
+    // })
+      // .then(response => {
+      //   console.log(response)
+      //   if (response.data) {
+      //     console.log('successful signup')
+      //     this.setState({
+      //       redirectTo: '/'
+      //     })
+      //   }
+      //   else {
+      //     console.log('Sign-up error');
+      //   }
+      // }).catch(error => {
+      //   console.log('Sign up server error: ')
+      //   console.log(error);
+      // })
   };
 
   render() {
@@ -137,7 +152,7 @@ class NewUser extends Component {
           </FormControl>
           <br />
           <br />
-          <Link to="/profile">
+          <Link to="/">
             <button onClick={() => this.handleFormSubmit()}>Submit</button>
           </Link>
         </div>

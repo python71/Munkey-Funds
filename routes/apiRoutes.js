@@ -1,6 +1,7 @@
 const db = require("../models");
 const routes = require("express").Router();
 const axios = require("axios");
+const passport = require('../passport')
 
 routes.post("/api/signup", function(req, res) {
   console.log(req.body);
@@ -21,6 +22,22 @@ routes.post("/api/signup", function(req, res) {
       // res.status(422).json(err.errors[0].message);
     });
 });
+
+routes.get("/api/login", 
+  function(req, res, next) {
+    console.log('routes/user.js, login, req.body: ');
+    console.log(req.body)
+    next()
+  },
+  passport.authenticate('local'),
+  (req, res) => {
+    console.log('logged in', req.user);
+    var userInfo = {
+        username: req.user.username
+    };
+    res.send(userInfo);
+  })
+  
 // get chart info
 routes.post("/api/stocks", function(req, res) {
   console.log("/api/stocks endpoint hit");
@@ -62,16 +79,14 @@ routes.post("/api/quotes", function(req, res) {
   const { symbol } = req.body;
   axios
     .get(
-      `https://api.iextrading.com/1.0/stock/market/batch?symbols=${symbol}&types=quote,news,chart`
+      `https://api.iextrading.com/1.0/stock/market/batch?symbols=${symbol}&types=chart&range=1m`
     )
     .then(response => {
       res.json(response.data);
     });
 });
 
-// routes.post("/api/login", function(req, res) {
-//   console.log("LOGIN")
-// })
+
 
 // need to create a DB post if user saves a stock
 //   db.Stocks.create({

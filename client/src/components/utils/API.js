@@ -7,7 +7,7 @@ export default {
   },
   // Gets the user with the given id
   getUser: (id) => {
-    return axios.get("/api/login" + id);
+    return axios.post("/api/login", id);
   },
 
   loadStockQuotes : (symbol) => {

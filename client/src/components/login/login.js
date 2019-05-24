@@ -3,6 +3,7 @@ import { Link, BrowserRouter as Router } from 'react-router-dom';
 import "./Login.css";
 import { FormControl, InputLabel, Input } from '@material-ui/core/';
 import axios from 'axios';
+import API from "../utils/API";
 import Header from '../header'
 
 class Login extends Component {
@@ -13,6 +14,7 @@ class Login extends Component {
       email: "",
       password: ""
     };
+    this.handleClick = this.handleClick.bind(this)
   }
 
   validateForm() {
@@ -34,33 +36,35 @@ class Login extends Component {
     var self = this;
     
     var payload = {
-      "firstname": this.state.firstname,
-      "lastname": this.state.lastname,
-      "email": this.state.username,
+      "email": this.state.email,
       "password": this.state.password,
-      "goal": this.state.goal
     }
-
-    axios.post(apiBaseUrl + 'login', payload)
-      .then(function (response) {
-        console.log(response);
-
-        if (response.data.code == 200) {
-          console.log("Login successfull");
-          // var uploadScreen=[];
-          // uploadScreen.push(<UploadScreen appContext={self.props.appContext}/>)
-          // self.props.appContext.setState({loginPage:[],uploadScreen:uploadScreen})
+    API.getUser({
+      email: this.state.email,
+      password: this.state.password,
+    })
+    // axios.post(apiBaseUrl + 'login', payload)
+    // axios
+    // .post(apiBaseUrl, '/user/login', payload)
+    .then(response => {
+        console.log('login response: ')
+        console.log(response)
+        if (response.status === 200) {
+            // update App.js state
+            this.props.updateUser({
+                loggedIn: true,
+                email: response.data.email
+            })
+            // update the state to redirect to home
+            this.setState({
+                redirectTo: '/profile'
+            })
         }
-        else if (response.data.code == 204) {
-          console.log("Username password do not match");
-          alert("username password do not match")
-        } else {
-          console.log("Username does not exists");
-          alert("Username does not exist");
-        }
-      }).catch(function (error) {
+    }).catch(error => {
+        console.log('login error: ')
         console.log(error);
-      });
+        
+    })
   }
 
 
@@ -74,7 +78,7 @@ class Login extends Component {
             <FormControl margin="normal" required="true">
               <InputLabel>Email</InputLabel>
               <Input
-                id="standard-email-input"
+                id="email"
                 label="Email"
                 autoFocus
                 type="email"
@@ -91,7 +95,7 @@ class Login extends Component {
                 type="password"
               />
             </FormControl>
-            <Link to="/profile">
+            {/* <Link> */}
               <br></br><br></br>
               <button
                 // disabled={!this.validateForm()}
@@ -100,7 +104,7 @@ class Login extends Component {
               >
                 Login
           </button>
-            </Link>
+            {/* </Link> */}
             <Link to="/newuser"><button>New User</button></Link>
           </form>
         </div >

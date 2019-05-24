@@ -5,7 +5,7 @@ const app = express();
 const db = require("./models");
 const session = require("express-session")
 const apiRoutes = require("./routes/apiRoutes");
-const passport = require("passport")
+const passport = require("./passport")
 
 // const apiRoutes = require("./routes/apiRoutes");
 
@@ -22,13 +22,18 @@ app.get("*", function (req, res) {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 
-app.use(session({ secret: "keyboard cat", resave: true, saveUninitialized: true }));
+app.use(session({ secret: "chucky-cheese", resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/", apiRoutes)
 require("./routes/api-routes")(app)
 // app.use("/", html-routes)(app)
+
+app.use( (req, res, next) => {
+  console.log('req.session', req.session);
+  next();
+});
 
 db.sequelize.sync().then(function () {
   app.listen(PORT, function () {
