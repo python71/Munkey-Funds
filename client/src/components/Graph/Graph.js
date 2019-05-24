@@ -1,7 +1,56 @@
 let canvas = this.refs.canvas
 let ctx = canvas.getContext("2d")
 let canvas = this.refs.canvas
-
+let config = {
+    type: 'line',
+    data: {
+        labels: N,
+        datasets: [{
+            label: 'Predicted',
+            fill: false,
+            backgroundColor: 'red',
+            borderColor: 'red',
+            data: data2,
+        }, {
+            label: 'Actual',
+            backgroundColor: 'blue',
+            borderColor: 'blue',
+            data: data1,
+            fill: false,
+        }]
+    },
+    options: {
+        responsive: true,
+        title: {
+            display: true,
+            text: 'Stock Price Prediction'
+        },
+        tooltips: {
+            mode: 'index',
+            intersect: false,
+        },
+        hover: {
+            mode: 'nearest',
+            intersect: true
+        },
+        scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Date'
+                }
+            }],
+            yAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Stock Value'
+                }
+            }]
+        }
+    }
+}
 class Canvas extends React.Component {
     componentDidMount() {
         const canvas = this.refs.canvas
@@ -14,63 +63,13 @@ class Canvas extends React.Component {
         }
       }
 
-    config() {
-        
-        type: 'line',
-        data: {
-            labels: N,
-            datasets: [{
-                label: 'Predicted',
-                fill: false,
-                backgroundColor: 'red',
-                borderColor: 'red',
-                data: data2,
-            }, {
-                label: 'Actual',
-                backgroundColor: 'blue',
-                borderColor: 'blue',
-                data: data1,
-                fill: false,
-            }]
-        },
-        options: {
-            responsive: true,
-            title: {
-                display: true,
-                text: 'Stock Price Prediction'
-            },
-            tooltips: {
-                mode: 'index',
-                intersect: false,
-            },
-            hover: {
-                mode: 'nearest',
-                intersect: true
-            },
-            scales: {
-                xAxes: [{
-                    display: true,
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Date'
-                    }
-                }],
-                yAxes: [{
-                    display: true,
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Stock Value'
-                    }
-                }]
-            }
-        }
-    };
+    config() 
 
     return (
 
-        <div>
-            <canvas ref="canvas" width={640} height={425} />
-        </div>
+        // <div>
+        //     <canvas ref="canvas" width={640} height={425} />
+        // </div>
 
     );
 }    
