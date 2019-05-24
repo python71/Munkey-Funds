@@ -1,22 +1,23 @@
 import axios from "axios";
 
 export default {
-  // Saves a book to the database
-  saveUser: (userData) => {
-    return axios.post("/api/signup", userData);
-  },
-  // Gets the user with the given id
-  getUser: (id) => {
-    return axios.get("/api/login" + id);
-  },
+	// Saves a book to the database
+	saveUser: userData => {
+		return axios.post("/api/signup", userData);
+	},
+	// Gets the user with the given id
+	getUser: id => {
+		return axios.get("/api/login" + id);
+	},
 
-  loadStockQuotes : (symbol) => {
-    // return axios.get(`https://api.iextrading.com/1.0/stock/${symbol}/quote`);
-    return axios.get(`https://api.iextrading.com/1.0/stock/${symbol}/chart/ytd`);
-    // TODO:
-    // [ ] Make API call for each stock symbol sent to this endpoint
-    // [ ] 
-  }
+	loadStockQuotes: symbol => {
+		// return axios.get(`https://api.iextrading.com/1.0/stock/${symbol}/quote`);
+		return axios.post(`/api/quote`, symbol);
+
+		// TODO:
+		// [ ] Make API call for each stock symbol sent to this endpoint
+		// [ ]
+	}
 };
 
 // EXAMPLE DATA TO MOCK UP:
