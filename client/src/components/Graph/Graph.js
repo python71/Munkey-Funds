@@ -63,8 +63,6 @@ class Canvas extends React.Component {
         }
       }
 
-    config() 
-
     return (
 
         // <div>
