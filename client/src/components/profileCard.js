@@ -22,6 +22,7 @@ import Grid from "@material-ui/core/Grid";
 import SearchIcon from "@material-ui/icons/Search";
 import SimpleTable from "../components/table";
 import FormControl from "@material-ui/core/FormControl";
+import Button from "@material-ui/core/Button";
 import API from "./utils/API";
 
 const styles = theme => ({
@@ -47,24 +48,28 @@ const styles = theme => ({
 	},
 	avatar: {
 		backgroundColor: red[500]
+	},
+	button: {
+		margin: theme.spacing.unit
+	},
+	input: {
+		display: "none"
 	}
 });
-
 class ProfileCard extends Component {
 	state = { expanded: false, searchOne: "", searchTwo: "", searchThree: "" };
 	handleExpandClick = () => {
 		this.setState(state => ({ expanded: !state.expanded }));
 	};
-
 	setSymbol = e => {
 		// e.preventDefault();
-		this.setState({ searchOne: e.target.value });
+		let symbol = e.target.value;
+		this.setState({ searchOne: symbol });
 		console.log(this.state.searchOne);
 		API.loadStockQuotes({ symbol: this.state.searchOne }).then(res =>
 			console.log(res)
 		);
 	};
-
 	render() {
 		const { classes } = this.props;
 		return (
@@ -92,7 +97,7 @@ class ProfileCard extends Component {
 						<Typography variant="h4" gutterBottom>
 							Overall Investment Performance: [+]
 						</Typography>
-						<FormControl>
+						<Grid>
 							<TextField
 								id="searchOne"
 								label="Stock Symbol Search"
@@ -104,36 +109,15 @@ class ProfileCard extends Component {
 								variant="outlined"
 								onChange={this.setSymbol}
 							/>
-							{/* <IconButton size="small" color="inherit">
-								<SearchIcon />
-							</IconButton> */}
-							{/* <TextField
-								id="standard-search2"
-								label="Stock Symbol Search"
-								type="search"
-								name="searchTwo"
-								value={this.state.searchTwo}
-								className={classes.textField}
-								margin="normal"
+							<Button
 								variant="outlined"
-							/>
-							<IconButton size="small" color="inherit">
-								<SearchIcon />
-							</IconButton> */}
-							{/* <TextField
-								id="standard-search3"
-								label="Stock Symbol Search"
-								type="search"
-								name="searchThree"
-								value={this.state.searchThree}
-								className={classes.textField}
 								margin="normal"
-								variant="outlined"
-							/>
-							<IconButton size="small" color="inherit">
-								<SearchIcon />
-							</IconButton> */}
-						</FormControl>
+								className={classes.button}
+							>
+								Search
+							</Button>
+						</Grid>
+
 						<Typography component="p">
 							Your current financial goal is: To become more financially
 							self-aware and improve my overall financial health.
