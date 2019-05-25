@@ -1,73 +1,19 @@
 import React, { Component } from 'react';
 import { ResponsiveLine } from '@nivo/line';
-import API from './utils/API';
+import API from '.././utils/API';
+import ChartButtons from './chartButtons';
+
 // make sure parent container have a defined height when using
 // responsive component, otherwise height will be 0 and
 // no chart will be rendered.
 // website examples showcase many properties,
 // you'll often use just a few of them.
-// const data = [
-//   {
-//     "id": "japan",
-//     // "color": "hsl(255, 70%, 50%)",
-//     "data": [
-//       {
-//         "x": "plane",
-//         "y": 15
-//       },
-//       {
-//         "x": "helicopter",
-//         "y": 10
-//       },
-//       {
-//         "x": "boat",
-//         "y": 131
-//       },
-//       {
-//         "x": "train",
-//         "y": 50
-//       },
-//       {
-//         "x": "subway",
-//         "y": 254
-//       },
-//       {
-//         "x": "bus",
-//         "y": 139
-//       },
-//       {
-//         "x": "car",
-//         "y": 170
-//       },
-//       {
-//         "x": "moto",
-//         "y": 128
-//       },
-//       {
-//         "x": "bicycle",
-//         "y": 195
-//       },
-//       {
-//         "x": "horse",
-//         "y": 150
-//       },
-//       {
-//         "x": "skateboard",
-//         "y": 271
-//       },
-//       {
-//         "x": "others",
-//         "y": 57
-//       }
-//     ]
-//   }
-// ];
-
 
 class StockChart extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      stockBtns: ['fb', 'aapl', 'fslr'],
       // dummy data to create the graph structure while waiting for the api request
       data: [
         {
@@ -205,6 +151,14 @@ class StockChart extends Component {
           ]}
         />}
         {/* {this.renderGraph()} */}
+        <div className='chart-buttons'>
+          {this.state.stockBtns.map(button => (
+            <ChartButtons
+              key={button.id}
+              symbol={button.symbol}
+            />
+          ))};
+        </div>
       </div>
     )
   }

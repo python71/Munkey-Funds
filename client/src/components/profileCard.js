@@ -24,7 +24,7 @@ import SimpleTable from "../components/table";
 import FormControl from "@material-ui/core/FormControl";
 import Button from "@material-ui/core/Button";
 import API from "./utils/API";
-import StockChart from "./stockChart";
+import StockChart from "./chart/stockChart";
 
 const styles = theme => ({
   card: {
@@ -141,6 +141,7 @@ class ProfileCard extends Component {
               <SimpleTable />
 
               <StockChart />
+              <br /><br /><br />
               <Typography paragraph>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
 								eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
