@@ -130,7 +130,7 @@ class StockChart extends Component {
 
 
   componentDidMount() {
-    API.loadMultipleQuotes({ symbol: "fb" })
+    API.loadMultipleQuotes({ symbol: "aapl" })
       .then(res => {
         console.log(res.data)
         this.setState({
