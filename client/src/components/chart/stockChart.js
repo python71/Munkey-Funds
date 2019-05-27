@@ -93,7 +93,7 @@ class StockChart extends Component {
         this.setState({
           data: res.data
         })
-        // console.log(res.data)
+        console.log(res.data)
       });
   };
 
@@ -186,7 +186,6 @@ class StockChart extends Component {
           ]}
         />}
         <Button onClick={() => this.AllButtonClick()} >All</Button>
-        {/* {this.renderGraph()} */}
         <div className='chart-buttons'>
           {this.state.stockBtns.map(button => (
             <ChartButton
@@ -199,10 +198,6 @@ class StockChart extends Component {
       </div>
     )
   }
-  // renderGraph() {
-  //   console.log(this.state.data)
-  //   return 
-  // }
 };
 
 export default StockChart;

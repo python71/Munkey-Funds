@@ -37,12 +37,4 @@ export default {
   //   return axios.post("/api/chart", userData);
   // }
 
-  getUserAllStocks: (symbol) => {
-    return axios.get('/api/chart/stocks/all', symbol);
-  },
-
-  getUserStocks: (symbol) => {
-    return axios.get('/api/chart/stocks/:id', symbol);
-  },
-
 };

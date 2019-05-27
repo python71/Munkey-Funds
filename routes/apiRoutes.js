@@ -2,6 +2,7 @@ const db = require("../models");
 const routes = require("express").Router();
 const axios = require("axios");
 
+// CREATE NEW USER
 routes.post("/api/signup", function (req, res) {
   console.log(req.body);
   db.User.create({
@@ -89,20 +90,6 @@ routes.post("/api/quotes", function (req, res) {
     })
     .then(err => console.log("NOOOOOOO!!!! Errors again."));
 });
-
-routes.get('/api/chart/stocks/all', (req, res) => {
-  db.Stocks.findAll({
-    where: {
-      userID: 2
-    }
-  })
-    .then(stocks => {
-      console.log('getting info');
-      console.log(stocks);
-      res.json(stocks);
-    });
-});
-
 
 
 // routes.post("/api/login", function(req, res) {
