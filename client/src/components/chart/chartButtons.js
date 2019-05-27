@@ -5,8 +5,8 @@ import './chart.css';
 const ChartButton = (props) => {
   return (
     <div className="chart-buttons" >
-      <Button size="small" className="stock-symbol-btn">{props.symbol}
-        {/* onClick={() => loadMultipleQuotes(this.symbol)}  */}
+      <Button size="small" className="stock-symbol-btn" onClick={() => console.log(`clicked ${props.symbol}`)} >
+        {props.symbol}
       </Button>
     </div>
   )
