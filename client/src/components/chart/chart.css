@@ -1,4 +1,5 @@
 .chart-buttons {
   display: inline-block;
-  margin: 1em;
+  padding: 0;
+  margin-left: .5em;
 }

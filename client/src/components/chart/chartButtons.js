@@ -5,7 +5,7 @@ import './chart.css';
 const ChartButton = (props) => {
   return (
     <div className="chart-buttons" >
-      <Button size="small" className="stock-symbol-btn" onClick={() => console.log(`clicked ${props.symbol}`)} >
+      <Button size="small" className="stock-symbol-btn" onClick={() => props.ChartButtonClick(props.symbol)}>
         {props.symbol}
       </Button>
     </div>
