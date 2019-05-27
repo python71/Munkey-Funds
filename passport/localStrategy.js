@@ -7,8 +7,9 @@ const strategy = new LocalStrategy(
         usernameField: 'email' // not necessary, DEFAULT
 	},
 	function(email, password, done) {
-        console.log("checking DB for user", email)
-		db.User.findOne({where: { email: email }}, (err, user) => {
+        console.log("checking DBls for user", email)
+		db.User.findOne({where: { email: email }}).then((user, err) => {
+            console.log(user)
             console.log('EMAIL: ', email)
             console.log('PASS: ', password)
 			if (err) {
@@ -17,7 +18,7 @@ const strategy = new LocalStrategy(
 			if (!user) {
 				return done(null, false, { message: 'Incorrect username' })
 			}
-			if (!user.checkPassword(password)) {
+			if (!user.validPassword(password)) {
 				return done(null, false, { message: 'Incorrect password' })
             }
             console.log('Passed LocalStrategy')

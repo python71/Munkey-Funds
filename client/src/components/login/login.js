@@ -39,7 +39,7 @@ class Login extends Component {
       "email": this.state.email,
       "password": this.state.password,
     }
-    API.getUser({
+    API.testUser({
       email: this.state.email,
       password: this.state.password,
     })

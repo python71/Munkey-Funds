@@ -16,7 +16,7 @@ class NewUser extends Component {
 
   handleFormSubmit = event => {
     // API.loadMultipleQuotes("fb,bidu").then(res => console.log(res));
-    API.loadStockQuotes({ symbol: "FB" }).then(res => console.log(res));
+    // API.loadStockQuotes({ symbol: "FB" }).then(res => console.log(res));
     // console.log("sign-up-form, username: ");
     console.log(this.state.email);
     API.saveUser({

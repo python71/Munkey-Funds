@@ -7,7 +7,14 @@ export default {
   },
   // Gets the user with the given id
   getUser: id => {
-    return axios.get("/api/login" + id);
+    console.log("this is getUser")
+    return axios.post("/api/login", id);
+  },
+
+
+  testUser: id => {
+    console.log("this is getUser")
+    return axios.post("/api/templogin", id);
   },
 
   loadStockQuotes: (symbol) => {

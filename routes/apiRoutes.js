@@ -23,8 +23,8 @@ routes.post("/api/signup", function (req, res) {
     });
 });
 
-routes.get("/api/login", 
-  function(req, res, next) {
+routes.post("/api/templogin", function(req, res, next) {  
+    console.log("apiRoutes HIT")
     console.log('routes/user.js, login, req.body: ');
     console.log(req.body)
     next()
@@ -37,6 +37,12 @@ routes.get("/api/login",
     };
     res.send(userInfo);
   })
+
+routes.post("/api/testlogin", function(req, res) {
+    console.log("testLogin hit")
+    console.log(req.body)
+  }
+) 
   
 // get chart info
 routes.post("/api/stocks", function (req, res) {
