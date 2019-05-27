@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { ResponsiveLine } from '@nivo/line';
 import API from '.././utils/API';
-import ChartButtons from './chartButtons';
+import ChartButton from './chartButtons';
+import Button from '@material-ui/core/Button';
 
 // make sure parent container have a defined height when using
 // responsive component, otherwise height will be 0 and
@@ -13,7 +14,17 @@ class StockChart extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      stockBtns: ['fb', 'aapl', 'fslr'],
+      stockBtns: [
+        {
+          "symbol": 'fb'
+        },
+        {
+          "symbol": 'aapl',
+        },
+        {
+          "symbol": 'fslr'
+        }
+      ],
       // dummy data to create the graph structure while waiting for the api request
       data: [
         {
@@ -76,7 +87,7 @@ class StockChart extends Component {
 
 
   componentDidMount() {
-    API.loadMultipleQuotes({ symbol: "aapl" })
+    API.loadMultipleQuotes({ symbol: "aapl,fb,fslr" })
       .then(res => {
         console.log(res.data)
         this.setState({
@@ -150,14 +161,16 @@ class StockChart extends Component {
             }
           ]}
         />}
+        <Button>All</Button>
         {/* {this.renderGraph()} */}
         <div className='chart-buttons'>
           {this.state.stockBtns.map(button => (
-            <ChartButtons
-              key={button.id}
+            <ChartButton
+              key={button.symbol}
               symbol={button.symbol}
+              onClick={() => console.log(`clicked ${button.symbol}`)}
             />
-          ))};
+          ))}
         </div>
       </div>
     )

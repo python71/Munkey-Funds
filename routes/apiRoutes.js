@@ -90,6 +90,21 @@ routes.post("/api/quotes", function (req, res) {
     .then(err => console.log("NOOOOOOO!!!! Errors again."));
 });
 
+routes.get('/api/chart/stocks/all', (req, res) => {
+  db.Stocks.findAll({
+    where: {
+      userID: 2
+    }
+  })
+    .then(stocks => {
+      console.log('getting info');
+      console.log(stocks);
+      res.json(stocks);
+    });
+});
+
+
+
 // routes.post("/api/login", function(req, res) {
 //   console.log("LOGIN")
 // })
