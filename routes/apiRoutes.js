@@ -2,6 +2,7 @@ const db = require("../models");
 const routes = require("express").Router();
 const axios = require("axios");
 
+// CREATE NEW USER
 routes.post("/api/signup", function (req, res) {
   console.log(req.body);
   db.User.create({
@@ -21,41 +22,43 @@ routes.post("/api/signup", function (req, res) {
       // res.status(422).json(err.errors[0].message);
     });
 });
-// get chart info
-routes.post("/api/stocks", function (req, res) {
-  console.log("/api/stocks endpoint hit");
-  const { symbol } = req.body;
-  console.log(symbol);
-  let data = [];
-  axios
-    .get(`https://api.iextrading.com/1.0/stock/${symbol}/chart/`)
-    .then(response => {
-      let stockData = {
-        id: symbol,
-        data: []
-      };
-      response.data.forEach(item => {
-        stockData.data.push({
-          x: item.date,
-          y: item.close
-        });
-      });
-      // console.log(response);
-      data.push(stockData);
-      res.json(data);
-    })
-    .catch(err => console.log(err));
-});
 
-// stock lookup
-routes.post("/api/chart", function (req, res) {
-  const { symbol } = req.body;
-  axios
-    .get(`https://api.iextrading.com/1.0/stock/${symbol}/quote`)
-    .then(response => {
-      res.json(response.data);
-    });
-});
+// // get chart info
+// routes.post("/api/stocks", function (req, res) {
+//   console.log("/api/stocks endpoint hit");
+//   const { symbol } = req.body;
+//   console.log(symbol);
+//   let data = [];
+//   axios
+//     .get(`https://api.iextrading.com/1.0/stock/${symbol}/chart/`)
+//     .then(response => {
+//       let stockData = {
+//         id: symbol,
+//         data: []
+//       };
+//       response.data.forEach(item => {
+//         stockData.data.push({
+//           x: item.date,
+//           y: item.close
+//         });
+//       });
+//       // console.log(response);
+//       data.push(stockData);
+//       res.json(data);
+//     })
+//     .catch(err => console.log(err));
+// });
+
+// // stock lookup
+// routes.post("/api/chart", function (req, res) {
+//   const { symbol } = req.body;
+//   axios
+//     .get(`https://api.iextrading.com/1.0/stock/${symbol}/quote`)
+//     .then(response => {
+//       res.json(response.data);
+//     });
+// });
+
 
 // multiple stock lookup
 routes.post("/api/quotes", function (req, res) {
@@ -65,7 +68,7 @@ routes.post("/api/quotes", function (req, res) {
   let data = [];
   axios
     .get(
-      `https://api.iextrading.com/1.0/stock/market/batch?symbols=${symbol}&types=chart&range=1m`
+      `https://cloud.iexapis.com/v1/stock/market/batch?token=pk_7dd5e2c663ec4be98e3743606acb40d3&symbols=${symbol}&types=chart&range=1m`
     )
     .then(response => {
       // console.log(response.data);
@@ -87,6 +90,7 @@ routes.post("/api/quotes", function (req, res) {
     })
     .then(err => console.log("NOOOOOOO!!!! Errors again."));
 });
+
 
 // routes.post("/api/login", function(req, res) {
 //   console.log("LOGIN")

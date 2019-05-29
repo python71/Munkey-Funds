@@ -1,73 +1,30 @@
 import React, { Component } from 'react';
 import { ResponsiveLine } from '@nivo/line';
-import API from './utils/API';
+import API from '.././utils/API';
+import ChartButton from './chartButtons';
+import Button from '@material-ui/core/Button';
+
 // make sure parent container have a defined height when using
 // responsive component, otherwise height will be 0 and
 // no chart will be rendered.
 // website examples showcase many properties,
 // you'll often use just a few of them.
-// const data = [
-//   {
-//     "id": "japan",
-//     // "color": "hsl(255, 70%, 50%)",
-//     "data": [
-//       {
-//         "x": "plane",
-//         "y": 15
-//       },
-//       {
-//         "x": "helicopter",
-//         "y": 10
-//       },
-//       {
-//         "x": "boat",
-//         "y": 131
-//       },
-//       {
-//         "x": "train",
-//         "y": 50
-//       },
-//       {
-//         "x": "subway",
-//         "y": 254
-//       },
-//       {
-//         "x": "bus",
-//         "y": 139
-//       },
-//       {
-//         "x": "car",
-//         "y": 170
-//       },
-//       {
-//         "x": "moto",
-//         "y": 128
-//       },
-//       {
-//         "x": "bicycle",
-//         "y": 195
-//       },
-//       {
-//         "x": "horse",
-//         "y": 150
-//       },
-//       {
-//         "x": "skateboard",
-//         "y": 271
-//       },
-//       {
-//         "x": "others",
-//         "y": 57
-//       }
-//     ]
-//   }
-// ];
-
 
 class StockChart extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      stockBtns: [
+        {
+          "symbol": 'fb'
+        },
+        {
+          "symbol": 'aapl',
+        },
+        {
+          "symbol": 'fslr'
+        }
+      ],
       // dummy data to create the graph structure while waiting for the api request
       data: [
         {
@@ -130,7 +87,31 @@ class StockChart extends Component {
 
 
   componentDidMount() {
-    API.loadMultipleQuotes({ symbol: "aapl" })
+    API.loadMultipleQuotes({ symbol: "aapl,fb,fslr" })
+      .then(res => {
+        console.log(res.data)
+        this.setState({
+          data: res.data
+        })
+        console.log(res.data)
+      });
+  };
+
+  // click event for stock chart buttons - will display the data for whichever stocks are chosen
+  ChartButtonClick = (button) => {
+    console.log(`click! ${button}`);
+    API.loadMultipleQuotes({ symbol: button })
+      .then(res => {
+        console.log(res.data)
+        this.setState({
+          data: res.data
+        })
+        // console.log(res.data)
+      });
+  };
+
+  AllButtonClick = () => {
+    API.loadMultipleQuotes({ symbol: "aapl,fb,fslr" })
       .then(res => {
         console.log(res.data)
         this.setState({
@@ -157,7 +138,7 @@ class StockChart extends Component {
             tickPadding: 0,
             tickRotation: 90,
             legend: '',
-            legendOffset: 70,
+            legendOffset: 50,
             legendPosition: 'middle'
           }}
           axisLeft={{
@@ -204,14 +185,19 @@ class StockChart extends Component {
             }
           ]}
         />}
-        {/* {this.renderGraph()} */}
+        <Button onClick={() => this.AllButtonClick()} >All</Button>
+        <div className='chart-buttons'>
+          {this.state.stockBtns.map(button => (
+            <ChartButton
+              key={button.symbol}
+              symbol={button.symbol}
+              ChartButtonClick={this.ChartButtonClick}
+            />
+          ))}
+        </div>
       </div>
     )
   }
-  // renderGraph() {
-  //   console.log(this.state.data)
-  //   return 
-  // }
 };
 
 export default StockChart;

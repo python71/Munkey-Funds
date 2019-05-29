@@ -1,7 +1,10 @@
 import axios from "axios";
 
 export default {
-  // Saves a book to the database
+
+  // USER ROUTES
+  //-----------------------------
+  // Saves a user to the database
   saveUser: userData => {
     return axios.post("/api/signup", userData);
   },
@@ -10,9 +13,9 @@ export default {
     return axios.get("/api/login" + id);
   },
 
+  // CHART ROUTES
+  // ----------------------------------
   loadStockQuotes: (symbol) => {
-    // return axios.get(`https://api.iextrading.com/1.0/stock/${symbol}/quote`);
-    // return axios.get(`https://api.iextrading.com/1.0/stock/${symbol}/chart/ytd`);
     return axios.post("/api/stocks", symbol);
     // TODO:
     // [ ] Make API call for each stock symbol sent to this endpoint
@@ -33,4 +36,5 @@ export default {
   // saves a quote for a single quote
   //   return axios.post("/api/chart", userData);
   // }
+
 };
