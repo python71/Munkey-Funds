@@ -14,8 +14,6 @@ import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import red from "@material-ui/core/colors/red";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Grid from "@material-ui/core/Grid";
@@ -24,6 +22,7 @@ import SimpleTable from "../components/table";
 import FormControl from "@material-ui/core/FormControl";
 import Button from "@material-ui/core/Button";
 import API from "./utils/API";
+import Mood from "@material-ui/icons/Mood";
 
 const styles = theme => ({
 	card: {
@@ -78,7 +77,7 @@ class ProfileCard extends Component {
 					<CardHeader
 						avatar={
 							<Avatar aria-label="Profile" className={classes.avatar}>
-								A
+								J
 							</Avatar>
 						}
 						action={<IconButton>{/* <MoreVertIcon /> */}</IconButton>}
@@ -92,10 +91,10 @@ class ProfileCard extends Component {
 					/>
 					<CardContent>
 						<Typography variant="h4" gutterBottom>
-							Current Financial Health: [+]
-						</Typography>
-						<Typography variant="h4" gutterBottom>
-							Overall Investment Performance: [+]
+							Overall Investment Performance:
+							<Mood
+								style={{ fontSize: 40, float: "right", marginRight: 110 }}
+							/>
 						</Typography>
 						<Grid>
 							<TextField
@@ -113,14 +112,13 @@ class ProfileCard extends Component {
 								variant="outlined"
 								margin="normal"
 								className={classes.button}
+								style={{ marginTop: 23 }}
 							>
 								Search
 							</Button>
 						</Grid>
-
-						<Typography component="p">
-							Your current financial goal is: To become more financially
-							self-aware and improve my overall financial health.
+						<Typography variant="h5" style={{ marginTop: 30 }}>
+							Investment Goal: Long-Term Growth
 						</Typography>
 					</CardContent>
 					<CardActions className={classes.actions} disableActionSpacing>
@@ -137,8 +135,36 @@ class ProfileCard extends Component {
 					</CardActions>
 					<Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
 						<CardContent>
-							<SimpleTable />
-							<Typography paragraph>
+							<SimpleTable
+								data={[]}
+								header={[
+									{
+										stock: "Stock",
+										prop: "stockSymbol"
+									},
+									{
+										open: "Open",
+										prop: "openPrice"
+									},
+									{
+										close: "Close",
+										prop: "closePrice"
+									},
+									{
+										current: "Current Price",
+										prop: "currentPrice"
+									},
+									{
+										shares: "Number of Shares Held",
+										prop: "sharesHeld"
+									},
+									{
+										value: "Value of Holding",
+										prop: "currentValue"
+									}
+								]}
+							/>
+							<Typography paragraph style={{ marginTop: 15 }}>
 								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
 								eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
 								enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -147,7 +173,7 @@ class ProfileCard extends Component {
 								nulla pariatur. Excepteur sint occaecat cupidatat non proident,
 								sunt in culpa qui officia deserunt mollit anim id est laborum.
 							</Typography>
-							<Typography paragraph>
+							<Typography paragraph style={{ marginTop: 15 }}>
 								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
 								eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
 								enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -156,7 +182,7 @@ class ProfileCard extends Component {
 								nulla pariatur. Excepteur sint occaecat cupidatat non proident,
 								sunt in culpa qui officia deserunt mollit anim id est laborum.
 							</Typography>
-							<Typography>
+							<Typography paragraph style={{ marginTop: 15 }}>
 								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
 								eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
 								enim ad minim veniam, quis nostrud exercitation ullamco laboris
