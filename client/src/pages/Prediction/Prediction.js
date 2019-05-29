@@ -1,19 +1,20 @@
 import React, { Component } from "react";
 import { Link, BrowserRouter as Router } from 'react-router-dom';
-import "./Login.css";
+
 import { FormControl, InputLabel, Input } from '@material-ui/core/';
-import StockChart from "../../components/stockChart"
+
 
 import Header from "../../components/header";
-import { processData } from 'helpers';
-import { generateNextDayPrediction } from 'helpers';
-import { minMaxScaler } from 'helpers';
-import { minMaxInverseScaler } from 'helpers';
-import { print } from 'helpers';
-import { plotData } from './plot';
+import { processData } from './helpers';
+import { generateNextDayPrediction } from './helpers';
+import { minMaxScaler } from './helpers';
+import { minMaxInverseScaler } from './helpers';
+import { print } from './helpers';
+import  Plot  from './plot';
 import * as tf from "@tensorflow/tfjs";
 import fetch from 'node-fetch';
 import moment from 'moment';
+
 
 
 const epochs = 100;
@@ -35,13 +36,15 @@ class Predict extends Component {
         fetch(url)
         .then(res => res.json())
         .then(function(data) {
+            // alert('data')
+            this.state.labels = data.map((val) => { return val['date']; });
 
             processData(data, timePortion).then(function (result) {
-            
+
                 // Crate the set for stock price prediction for the next day
                 let nextDayPrediction = generateNextDayPrediction(result.originalData, result.timePortion);
                 // Get the last date from the data set
-                let predictDate = (new Date(labels[labels.length-1] + 'T00:00:00.000')).addDays(1);
+                let predictDate = (new Date(this.state.labels[this.state.labels.length-1] + 'T00:00:00.000')).addDays(1);
     
                 // Build the Convolutional Tensorflow model
                 this.buildCnn(result).then(function (built) {
@@ -83,16 +86,16 @@ class Predict extends Component {
                                 this.state.predictedXInverse = minMaxInverseScaler(pred, min, max);
     
                                 // Convert Float32Array to regular Array, so we can add additional value
-                                this.state.predictedXInverse.data = Array.prototype.slice.call(predictedXInverse.data);
+                                this.state.predictedXInverse.data = Array.prototype.slice.call(this.state.predictedXInverse.data);
                                 // Add the next day predicted stock price so it's showed on the graph
-                                this.state.predictedXInverse.data[predictedXInverse.data.length] = inversePredictedValue.data[0];
+                                this.state.predictedXInverse.data[this.state.predictedXInverse.data.length] = inversePredictedValue.data[0];
     
                                 // Revert the scaled labels from the trainY (original), 
                                 // so we can compare them with the predicted one
                                 this.state.trainYInverse = minMaxInverseScaler(built.data.trainY, min, max);
     
                                 // Plot the original (trainY) and predicted values for the same features set (trainX)
-                                plotData(trainYInverse.data, predictedXInverse.data, labels);
+
                             });
                         });
                         
@@ -197,9 +200,13 @@ class Predict extends Component {
         return(
             <div>
                 <Header />
+                <Plot
+                    data1 = {this.state.trainYInverse.data}
+                    data2 = {this.state.predictedXInverse.data}
+                    label = {this.state.labels} />
             </div>
         );
     }
 }
 
-export default Prediction;
+export default Predict;

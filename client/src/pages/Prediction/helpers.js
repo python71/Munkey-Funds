@@ -27,7 +27,6 @@ export function processData(data, timePortion) {
 
                 trainY.push(scaledFeatures[i]);
             }
-
         } catch (ex) {
             resolve(ex);
             console.log(ex);
