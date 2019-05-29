@@ -27,6 +27,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/", apiRoutes)
+require("./routes/api-routes")(app)
+// app.use("/", html-routes)(app)
 
 db.sequelize.sync().then(function () {
   app.listen(PORT, function () {

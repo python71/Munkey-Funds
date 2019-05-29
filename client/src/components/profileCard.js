@@ -23,37 +23,38 @@ import FormControl from "@material-ui/core/FormControl";
 import Button from "@material-ui/core/Button";
 import API from "./utils/API";
 import Mood from "@material-ui/icons/Mood";
+import StockChart from "./chart/stockChart";
 
 const styles = theme => ({
-	card: {
-		maxWidth: 800
-	},
-	media: {
-		height: 0,
-		paddingTop: "56.25%" // 16:9
-	},
-	actions: {
-		display: "flex"
-	},
-	expand: {
-		transform: "rotate(0deg)",
-		marginLeft: "auto",
-		transition: theme.transitions.create("transform", {
-			duration: theme.transitions.duration.shortest
-		})
-	},
-	expandOpen: {
-		transform: "rotate(180deg)"
-	},
-	avatar: {
-		backgroundColor: red[500]
-	},
-	button: {
-		margin: theme.spacing.unit
-	},
-	input: {
-		display: "none"
-	}
+  card: {
+    maxWidth: 800
+  },
+  media: {
+    height: 0,
+    paddingTop: "56.25%" // 16:9
+  },
+  actions: {
+    display: "flex"
+  },
+  expand: {
+    transform: "rotate(0deg)",
+    marginLeft: "auto",
+    transition: theme.transitions.create("transform", {
+      duration: theme.transitions.duration.shortest
+    })
+  },
+  expandOpen: {
+    transform: "rotate(180deg)"
+  },
+  avatar: {
+    backgroundColor: red[500]
+  },
+  button: {
+    margin: theme.spacing.unit
+  },
+  input: {
+    display: "none"
+  }
 });
 class ProfileCard extends Component {
 	state = { expanded: false, searchOne: "", searchTwo: "", searchThree: "" };
@@ -191,16 +192,16 @@ class ProfileCard extends Component {
 								nulla pariatur. Excepteur sint occaecat cupidatat non proident,
 								sunt in culpa qui officia deserunt mollit anim id est laborum.
 							</Typography>
-						</CardContent>
-					</Collapse>
-				</Card>
-			</Grid>
-		);
-	}
+            </CardContent>
+          </Collapse>
+        </Card>
+      </Grid>
+    );
+  }
 }
 
 ProfileCard.propTypes = {
-	classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(ProfileCard);
