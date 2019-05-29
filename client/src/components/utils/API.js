@@ -11,12 +11,6 @@ export default {
     return axios.post("/api/login", id);
   },
 
-
-  testUser: id => {
-    console.log("this is getUser")
-    return axios.post("/api/templogin", id);
-  },
-
   loadStockQuotes: (symbol) => {
     // return axios.get(`https://api.iextrading.com/1.0/stock/${symbol}/quote`);
     // return axios.get(`https://api.iextrading.com/1.0/stock/${symbol}/chart/ytd`);

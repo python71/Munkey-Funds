@@ -4,26 +4,40 @@ const axios = require("axios");
 const passport = require('../passport')
 
 routes.post("/api/signup", function (req, res) {
-  console.log(req.body);
-  db.User.create({
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
-    email: req.body.email,
-    password: req.body.password,
-    goal: req.body.goal
-  })
-    .then(function (data) {
-      console.log(data);
-      res.redirect(307, "/api/login");
-    })
-    .catch(function (err) {
-      console.log(err);
-      res.json(err);
-      // res.status(422).json(err.errors[0].message);
-    });
-});
+  console.log(`Sign up post in apiRoutes: ${req.body}`);
+    db.User.findOne({where: { email: req.body.email }}).then((email, err) => {
+      console.log(email)
+      if (err) {
+          console.log('apiRoutes.js post error: ', err)
+      } else if (email) {
+          // this console log will need to be removed
+          console.log(`Sorry, already a user with the email: ${email}`)
+          res.json({
+              error: `Sorry, already a user with the email: ${email}`
+          })
+      } else {
 
-routes.post("/api/templogin", function(req, res, next) {  
+        db.User.create({
+          firstname: req.body.firstname,
+          lastname: req.body.lastname,
+          email: req.body.email,
+          password: req.body.password,
+          goal: req.body.goal
+        })
+          .then(function (data) {
+            console.log(data);
+            res.redirect(307, "/api/login");
+          })
+          .catch(function (err) {
+            console.log(err);
+            res.json(err);
+            // res.status(422).json(err.errors[0].message);
+        })
+      }
+    });
+  });
+
+routes.post("/api/login", function(req, res, next) {  
     console.log("apiRoutes HIT")
     console.log('routes/user.js, login, req.body: ');
     console.log(req.body)
@@ -31,19 +45,14 @@ routes.post("/api/templogin", function(req, res, next) {
   },
   passport.authenticate('local'),
   (req, res) => {
-    console.log('logged in', req.user);
+    // console.log('logged in', req.user);
     var userInfo = {
-        username: req.user.username
+        username: req.user.email
     };
+    console.log('THIS SHOULD BE USER EMAIL', userInfo)
     res.send(userInfo);
   })
 
-routes.post("/api/testlogin", function(req, res) {
-    console.log("testLogin hit")
-    console.log(req.body)
-  }
-) 
-  
 // get chart info
 routes.post("/api/stocks", function (req, res) {
   console.log("/api/stocks endpoint hit");

@@ -18,7 +18,7 @@ class NewUser extends Component {
     // API.loadMultipleQuotes("fb,bidu").then(res => console.log(res));
     // API.loadStockQuotes({ symbol: "FB" }).then(res => console.log(res));
     // console.log("sign-up-form, username: ");
-    console.log(this.state.email);
+    console.log('handleFormSubmit in newuser.js');
     API.saveUser({
       firstname: this.state.firstname,
       lastname: this.state.lastname,
@@ -27,20 +27,24 @@ class NewUser extends Component {
       goal: this.state.goal
     })
     .then(response => {
+      console.log('login response: ')
       console.log(response)
-      if (response.data) {
-        console.log('successful signup')
-        this.setState({
-          redirectTo: '/'
-        })
+      if (response.status === 200) {
+          // update App.js state
+          this.props.updateUser({
+              loggedIn: true,
+              username: response.data.username
+          })
+          // update the state to redirect to home
+          this.setState({
+              redirectTo: '/'
+          })
       }
-      else {
-        console.log('Sign-up error');
-      }
-    }).catch(error => {
-      console.log('Sign up server error: ')
+  }).catch(error => {
+      console.log('login error: ')
       console.log(error);
-    })
+      
+  })
   };
 
   clickButton = event => {

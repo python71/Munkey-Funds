@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link, BrowserRouter as Router } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import "./Login.css";
 import { FormControl, InputLabel, Input } from '@material-ui/core/';
 import axios from 'axios';
@@ -15,6 +16,7 @@ class Login extends Component {
       password: ""
     };
     this.handleClick = this.handleClick.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
 
   validateForm() {
@@ -32,6 +34,8 @@ class Login extends Component {
   }
 
   handleClick(event) {
+
+
     var apiBaseUrl = "http://localhost:3001/api/";
     var self = this;
     
@@ -39,7 +43,7 @@ class Login extends Component {
       "email": this.state.email,
       "password": this.state.password,
     }
-    API.testUser({
+    API.getUser({
       email: this.state.email,
       password: this.state.password,
     })
@@ -48,7 +52,7 @@ class Login extends Component {
     // .post(apiBaseUrl, '/user/login', payload)
     .then(response => {
         console.log('login response: ')
-        console.log(response)
+        console.log(response.status)
         if (response.status === 200) {
             // update App.js state
             this.props.updateUser({
@@ -57,6 +61,7 @@ class Login extends Component {
             })
             // update the state to redirect to home
             this.setState({
+                email: response.data.email,
                 redirectTo: '/profile'
             })
         }
@@ -70,46 +75,50 @@ class Login extends Component {
 
 
   render() {
-    return (
-      <div>
-        <Header />
-        <div className="Login">
-          <form onSubmit={this.handleSubmit}>
-            <FormControl margin="normal" required="true">
-              <InputLabel>Email</InputLabel>
-              <Input
-                id="email"
-                label="Email"
-                autoFocus
-                type="email"
-                value={this.state.email}
-                onChange={this.handleChange}
-              />
-            </FormControl>
-            <FormControl margin="normal" required="true">
-              <InputLabel>Password</InputLabel>
-              <Input
-                id="password"
-                value={this.state.password}
-                onChange={this.handleChange}
-                type="password"
-              />
-            </FormControl>
-            {/* <Link> */}
-              <br></br><br></br>
-              <button
-                // disabled={!this.validateForm()}
-                type="submit"
-                onClick={(event) => this.handleClick(event)}
-              >
-                Login
-          </button>
-            {/* </Link> */}
-            <Link to="/newuser"><button>New User</button></Link>
-          </form>
-        </div >
-      </div>
-    )
+    if (this.state.redirectTo) {
+      return <Redirect to={{ pathname: this.state.redirectTo }} />
+    } else {
+      return (
+        <div>
+          <Header />
+          <div className="Login">
+            <form onSubmit={this.handleSubmit}>
+              <FormControl margin="normal" required="true">
+                <InputLabel>Email</InputLabel>
+                <Input
+                  id="email"
+                  label="Email"
+                  autoFocus
+                  type="email"
+                  value={this.state.email}
+                  onChange={this.handleChange}
+                />
+              </FormControl>
+              <FormControl margin="normal" required="true">
+                <InputLabel>Password</InputLabel>
+                <Input
+                  id="password"
+                  value={this.state.password}
+                  onChange={this.handleChange}
+                  type="password"
+                />
+              </FormControl>
+              {/* <Link> */}
+                <br></br><br></br>
+                <button
+                  // disabled={!this.validateForm()}
+                  type="submit"
+                  onClick={(event) => this.handleClick(event)}
+                >
+                  Login
+            </button>
+              {/* </Link> */}
+              <Link to="/newuser"><button>New User</button></Link>
+            </form>
+          </div >
+        </div>
+      )
+    }
   }
 }
 
