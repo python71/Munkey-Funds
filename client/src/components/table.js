@@ -1,64 +1,77 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import DeleteIcon from "@material-ui/icons/Delete";
+import TrendingUp from "@material-ui/icons/TrendingUp";
+import IconButton from "@material-ui/core/IconButton";
 
-const styles = theme => ({
-	root: {
-		width: "100%",
-		marginTop: theme.spacing.unit * 3,
-		overflowX: "auto"
-	},
-	table: {
-		minWidth: 700
-	}
-});
+// const useStyles = makeStyles(theme => ({
+// 	root: {
+// 		width: "100%",
+// 		marginTop: theme.spacing(3),
+// 		overflowX: "auto"
+// 	},
+// 	table: {
+// 		minWidth: 650
+// 	}
+// }));
 
-let id = 0;
-function createData(company, price, open, close, high, low) {
-	id += 1;
-	return { id, company, price, open, close, high, low };
+function createData(company, price, shares, value) {
+	return { company, price, shares, value };
 }
 
 const rows = [
-	createData("Apple", 159, 6.0, 24, 4.0, 1),
-	createData("Google", 237, 9.0, 37, 4.3, 1),
-	createData("Facebook", 262, 16.0, 24, 6.0, 1),
-	createData("Uber", 305, 3.7, 67, 4.3, 1),
-	createData("Lyft", 356, 16.0, 49, 3.9, 1)
+	// createData(),
+	// // { data.data.companyName },
+	// // { data.data.close },
+	// // { data.data.iexRealtimePrice },
+	// // { shares },
+	// // { (data.data.iexRealtimePrice * shares) }
+	createData("Facebook Inc", 184.17, 4, 736.68),
+	createData("Apple Inc", 178.23, 24, 4277.52),
+	createData("Vangaurd Total Stock Market Index", 70.31, 67, 4710.77)
 ];
 
-function SimpleTable(props) {
-	const { classes } = props;
-
+function SimpleTable() {
+	// const classes = useStyles();
 	return (
-		<Paper className={classes.root}>
-			<Table className={classes.table}>
+		<Paper>
+			<Table>
 				<TableHead>
 					<TableRow>
 						<TableCell>Company</TableCell>
-						<TableCell align="right">Price</TableCell>
-						<TableCell align="right">Open</TableCell>
-						<TableCell align="right">Close</TableCell>
-						<TableCell align="right">High</TableCell>
-						<TableCell align="right">Low</TableCell>
+						<TableCell>Current Price</TableCell>
+						<TableCell>Number of Shares</TableCell>
+						<TableCell>Current Total Value</TableCell>
+						<TableCell>Check Outlook</TableCell>
+						<TableCell>Remove</TableCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>
 					{rows.map(row => (
-						<TableRow key={row.id}>
-							<TableCell component="th" scope="row">
+						<TableRow key={row.name}>
+							{/* <TableCell component="th" scope="row">
 								{row.name}
+							</TableCell> */}
+							<TableCell>{row.company}</TableCell>
+							<TableCell>{row.price}</TableCell>
+							<TableCell>{row.shares}</TableCell>
+							<TableCell>{row.value}</TableCell>
+							<TableCell>
+								<IconButton aria-label="Delete">
+									<TrendingUp fontSize="small" />
+								</IconButton>
 							</TableCell>
-							<TableCell align="right">{row.calories}</TableCell>
-							<TableCell align="right">{row.fat}</TableCell>
-							<TableCell align="right">{row.carbs}</TableCell>
-							<TableCell align="right">{row.protein}</TableCell>
+							<TableCell>
+								<IconButton aria-label="Delete">
+									<DeleteIcon fontSize="small" style={{ marginLeft: 1 }} />
+								</IconButton>
+							</TableCell>
 						</TableRow>
 					))}
 				</TableBody>
@@ -67,8 +80,4 @@ function SimpleTable(props) {
 	);
 }
 
-SimpleTable.propTypes = {
-	classes: PropTypes.object.isRequired
-};
-
-export default withStyles(styles)(SimpleTable);
+export default SimpleTable;
