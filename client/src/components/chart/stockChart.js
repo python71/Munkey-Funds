@@ -111,7 +111,7 @@ class StockChart extends Component {
   };
 
   AllButtonClick = () => {
-    API.loadMultipleQuotes({ symbol: "aapl,fb,fslr" })
+    API.loadMultipleQuotes({ symbol: "fslr,fb,aapl" })
       .then(res => {
         console.log(res.data)
         this.setState({
@@ -146,7 +146,7 @@ class StockChart extends Component {
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: 'price',
+            legend: '',
             legendOffset: -40,
             legendPosition: 'middle'
           }}
