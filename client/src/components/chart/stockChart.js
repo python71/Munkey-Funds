@@ -129,7 +129,7 @@ class StockChart extends Component {
           data={this.state.data}
           margin={{ top: 50, right: 110, bottom: 80, left: 60 }}
           xScale={{ type: 'point' }}
-          yScale={{ type: 'linear', stacked: true, min: 'auto', max: 'auto' }}
+          yScale={{ type: 'linear', stacked: false, min: 'auto', max: 'auto' }}
           axisTop={null}
           axisRight={null}
           axisBottom={{
@@ -137,7 +137,7 @@ class StockChart extends Component {
             tickSize: 0,
             tickPadding: 0,
             tickRotation: 90,
-            legend: '',
+            legend: 'price',
             legendOffset: 50,
             legendPosition: 'middle'
           }}
