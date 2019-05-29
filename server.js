@@ -5,7 +5,8 @@ const app = express();
 const db = require("./models");
 const session = require("express-session")
 const apiRoutes = require("./routes/apiRoutes");
-const passport = require("passport")
+const passport = require("passport");
+const tf = require("@tensorflow/tfjs-node")
 
 // const apiRoutes = require("./routes/apiRoutes");
 
