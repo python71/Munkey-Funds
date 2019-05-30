@@ -66,16 +66,31 @@ routes.post("/api/quotes", function (req, res) {
   const { symbol } = req.body;
   // console.log(symbol);
   let data = [];
+  // db.Stocks.findAll({
+  //   where: ({
+  //     UserId: 3
+  //   })
+  // })
+  //   .then(function (data) {
+  //     console.log("Stock symbols from DB: ", data)
+  //     res.redirect(307, "/api/login");
+  //   })
+  //   .catch(function (err) {
+  //     console.log(err);
+  //     res.json(err);
+  //     // res.status(422).json(err.errors[0].message);
+  //   });
   axios
     .get(
-      `https://cloud.iexapis.com/v1/stock/market/batch?token=pk_7dd5e2c663ec4be98e3743606acb40d3&symbols=${symbol}&types=chart&range=1m`
+      `https://cloud.iexapis.com/v1/stock/market/batch?token=pk_7dd5e2c663ec4be98e3743606acb40d3&symbols=${symbol}&types=news,chart&range=1m`
     )
     .then(response => {
       // console.log(response.data);
       for (let key in response.data) {
         let payLoad = {
           id: key,
-          data: []
+          data: [],
+          news: []
         };
         response.data[key].chart.forEach(dailyData => {
           payLoad.data.push({
@@ -84,8 +99,15 @@ routes.post("/api/quotes", function (req, res) {
           });
         })
         data.push(payLoad);
+        response.data[key].news.forEach(dailyNews => {
+          payLoad.news.push({
+            relatedStock: dailyNews.related,
+            headline: dailyNews.headline,
+            link: dailyNews.url
+          })
+        })
       }
-      console.log(data);
+      // console.log(data);
       res.json(data);
     })
     .then(err => console.log("NOOOOOOO!!!! Errors again."));
@@ -112,5 +134,7 @@ routes.post("/api/quotes", function (req, res) {
 //     // res.status(422).json(err.errors[0].message);
 //   });
 
-
+  routes.get("/api/getQuote", function(req, res) {
+    console.log("getQuote hit")
+  })
 module.exports = routes;

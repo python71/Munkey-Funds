@@ -74,7 +74,7 @@ class Login extends Component {
             <FormControl margin="normal" required="true">
               <InputLabel>Email</InputLabel>
               <Input
-                id="standard-email-input"
+                id="email"
                 label="Email"
                 autoFocus
                 type="email"

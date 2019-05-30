@@ -32,9 +32,9 @@ export default {
     return axios.post("api/quotes", symbol);
   },
 
-  // saveQuote : (quoteInfo) => {
+  saveQuote : (quoteInfo) => {
   // saves a quote for a single quote
-  //   return axios.post("/api/chart", userData);
-  // }
+    return axios.post("/api/saveQuote", quoteInfo);
+  }
 
 };

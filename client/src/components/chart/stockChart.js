@@ -93,7 +93,7 @@ class StockChart extends Component {
         this.setState({
           data: res.data
         })
-        console.log(res.data)
+        // console.log(res.data[0].news)
       });
   };
 
@@ -129,7 +129,7 @@ class StockChart extends Component {
           data={this.state.data}
           margin={{ top: 50, right: 110, bottom: 80, left: 60 }}
           xScale={{ type: 'point' }}
-          yScale={{ type: 'linear', stacked: true, min: 'auto', max: 'auto' }}
+          yScale={{ type: 'linear', stacked: false, min: 'auto', max: 'auto' }}
           axisTop={null}
           axisRight={null}
           axisBottom={{
