@@ -137,7 +137,7 @@ class StockChart extends Component {
             tickSize: 0,
             tickPadding: 0,
             tickRotation: 90,
-            legend: 'price',
+            legend: '',
             legendOffset: 50,
             legendPosition: 'middle'
           }}
@@ -146,7 +146,7 @@ class StockChart extends Component {
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: '',
+            legend: 'price',
             legendOffset: -40,
             legendPosition: 'middle'
           }}
@@ -189,7 +189,7 @@ class StockChart extends Component {
         <div className='chart-buttons'>
           {this.state.stockBtns.map(button => (
             <ChartButton
-              key={button.symbol}
+              key={button.symbol + 111}
               symbol={button.symbol}
               ChartButtonClick={this.ChartButtonClick}
             />

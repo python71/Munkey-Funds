@@ -32,7 +32,7 @@ class Login extends Component {
   handleClick(event) {
     var apiBaseUrl = "http://localhost:3001/api/";
     var self = this;
-    
+
     var payload = {
       "firstname": this.state.firstname,
       "lastname": this.state.lastname,
@@ -74,7 +74,7 @@ class Login extends Component {
             <FormControl margin="normal" required="true">
               <InputLabel>Email</InputLabel>
               <Input
-                id="standard-email-input"
+                id="email"
                 label="Email"
                 autoFocus
                 type="email"
