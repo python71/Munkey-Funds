@@ -15,41 +15,8 @@ class NewUser extends Component {
   };
 
   handleFormSubmit = event => {
-    API.loadStockQuotes({ symbol: "FB" }).then(res => console.log(res));
-    // API.saveUser({
-    // 	firstname: this.state.firstname,
-    // 	lastname: this.state.lastname,
-    // 	email: this.state.email,
-    // 	password: this.state.password,
-    // 	goal: this.state.goal
-    // })
-    // 	.then(res => console.log(res.data))
-    // 	// console.log("new user:" + newUser))
-    // 	.catch(err => console.log(err));
-  };
-
-  // clickButton = event => {
-  //   event.preventDefault();
-  //   console.log("button clicked")
-  // };
-  validateForm() {
-    return this.state.email.length > 0 && this.state.password.length > 0;
-  }
-
-  handleChange = event => {
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value
-    });
-  };
-
-  handleSubmit = event => {
-    event.preventDefault();
-    console.log("sign-up-form, username: ");
-    console.log(this.state.username);
-    //request to server here
-    axios.post('/', {
-      firstname: this.state.username,
+    API.saveUser({
+      firstname: this.state.firstname,
       lastname: this.state.lastname,
       email: this.state.email,
       password: this.state.password,
@@ -70,6 +37,22 @@ class NewUser extends Component {
         console.log('Sign up server error: ')
         console.log(error);
       })
+  };
+
+  // clickButton = event => {
+  //   event.preventDefault();
+  //   console.log("button clicked")
+  // };
+
+  validateForm() {
+    return this.state.email.length > 0 && this.state.password.length > 0;
+  }
+
+  handleChange = event => {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value
+    });
   };
 
   render() {

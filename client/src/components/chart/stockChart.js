@@ -129,7 +129,7 @@ class StockChart extends Component {
           data={this.state.data}
           margin={{ top: 50, right: 110, bottom: 80, left: 60 }}
           xScale={{ type: 'point' }}
-          yScale={{ type: 'linear', stacked: true, min: 'auto', max: 'auto' }}
+          yScale={{ type: 'linear', stacked: false, min: 'auto', max: 'auto' }}
           axisTop={null}
           axisRight={null}
           axisBottom={{
@@ -146,7 +146,7 @@ class StockChart extends Component {
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: '',
+            legend: 'price',
             legendOffset: -40,
             legendPosition: 'middle'
           }}
@@ -189,7 +189,7 @@ class StockChart extends Component {
         <div className='chart-buttons'>
           {this.state.stockBtns.map(button => (
             <ChartButton
-              key={button.symbol}
+              key={button.symbol + 111}
               symbol={button.symbol}
               ChartButtonClick={this.ChartButtonClick}
             />
