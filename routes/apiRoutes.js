@@ -92,6 +92,7 @@ routes.post("/api/quotes", function (req, res) {
           data: [],
           news: []
         };
+        // pulling the X and Y coordinates for the chart
         response.data[key].chart.forEach(dailyData => {
           payLoad.data.push({
             x: dailyData.date,
@@ -99,6 +100,7 @@ routes.post("/api/quotes", function (req, res) {
           });
         })
         data.push(payLoad);
+        // pulls news data for the newsfeed
         response.data[key].news.forEach(dailyNews => {
           payLoad.news.push({
             relatedStock: dailyNews.related,
