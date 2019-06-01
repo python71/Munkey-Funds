@@ -67,6 +67,20 @@ routes.post("/api/quotes", function (req, res) {
   const { symbol } = req.body;
   // console.log(symbol);
   let data = [];
+  // db.Stocks.findAll({
+  //   where: ({
+  //     UserId: 3
+  //   })
+  // })
+  //   .then(function (data) {
+  //     console.log("Stock symbols from DB: ", data)
+  //     res.redirect(307, "/api/login");
+  //   })
+  //   .catch(function (err) {
+  //     console.log(err);
+  //     res.json(err);
+  //     // res.status(422).json(err.errors[0].message);
+  //   });
   axios
     .get(
       `https://cloud.iexapis.com/v1/stock/market/batch?token=${process.env.API_KEY}&symbols=${symbol}&types=chart&range=1m`
@@ -76,8 +90,10 @@ routes.post("/api/quotes", function (req, res) {
       for (let key in response.data) {
         let payLoad = {
           id: key,
-          data: []
+          data: [],
+          news: []
         };
+        // pulling the X and Y coordinates for the chart
         response.data[key].chart.forEach(dailyData => {
           payLoad.data.push({
             x: dailyData.date,
@@ -85,8 +101,16 @@ routes.post("/api/quotes", function (req, res) {
           });
         })
         data.push(payLoad);
+        // pulls news data for the newsfeed
+        response.data[key].news.forEach(dailyNews => {
+          payLoad.news.push({
+            relatedStock: dailyNews.related,
+            headline: dailyNews.headline,
+            link: dailyNews.url
+          })
+        })
       }
-      console.log(data);
+      // console.log(data);
       res.json(data);
     })
     .then(err => console.log("NOOOOOOO!!!! Errors again."));
@@ -126,5 +150,36 @@ routes.get('/api/chart/stocks/all', (req, res) => {
 //     // res.status(422).json(err.errors[0].message);
 //   });
 
+  // adds users stock request into database
+  routes.post("/api/saveQuote", function(req, res) {
+    db.Stocks.create({
+      stock: req.body.stock,
+      UserId: req.body.UserId
+    })
+    .then(function (data) {
+      console.log(data);
+    })
+    .catch(function (err) {
+      console.log(err);
+      res.json(err);
+      // res.status(422).json(err.errors[0].message);
+    });    
+  })
+
+  routes.post("/api/getQuote", function(req, res) {
+    console.log("/api/getQuote/ endpoint hit");
+    console.log(req.body.UserId);
+    db.Stocks.findAll({
+         where: {
+            UserId: req.body.UserId
+         }
+      }).then(function(user) {
+         console.log(user);
+         if (!user) {
+             res.status(400).send({ error: "User not found." });
+         }
+         res.json(user);
+      }).catch(err => console.log(err));
+    })
 
 module.exports = routes;

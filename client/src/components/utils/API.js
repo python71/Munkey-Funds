@@ -22,4 +22,19 @@ export default {
     return axios.post("api/quotes", symbol);
   },
 
+  saveQuote : (quoteInfo) => {
+  // saves a quote for a single quote
+    return axios.post("/api/saveQuote", quoteInfo);
+  },
+
+  getQuotes : (userInfo) => {
+    return axios.post("/api/getQuote", userInfo);
+  }
+  // getQuote : (userInfo) =>{
+  //   // saves a quote for a single quote
+  //     console.log(userInfo)
+  //     return axios.get("/api/tempQuote", userInfo)
+  //     .catch(err => console.log(err)); // Added error handling
+  //   }
+
 };
