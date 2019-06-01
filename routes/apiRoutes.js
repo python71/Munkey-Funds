@@ -3,7 +3,7 @@ const routes = require("express").Router();
 const axios = require("axios");
 
 // CREATE NEW USER
-routes.post("/api/signup", function (req, res) {
+routes.post("/api/users", function (req, res) {
   console.log(req.body);
   db.User.create({
     firstname: req.body.firstname,
@@ -11,16 +11,22 @@ routes.post("/api/signup", function (req, res) {
     email: req.body.email,
     password: req.body.password,
     goal: req.body.goal
-  })
-    .then(function (data) {
-      console.log(data);
-      res.redirect(307, "/api/login");
-    })
-    .catch(function (err) {
+  }).catch(function (err) {
       console.log(err);
       res.json(err);
-      // res.status(422).json(err.errors[0].message);
     });
+});
+
+routes.get("/api/users", (req, res) => {
+  db.User.find().then(
+      (data) => {
+          res.json(data);
+      }
+  ).catch(
+      (err) => {
+          res.json({error: err});
+      }
+  );
 });
 
 // // get chart info
@@ -91,10 +97,6 @@ routes.post("/api/quotes", function (req, res) {
     .then(err => console.log("NOOOOOOO!!!! Errors again."));
 });
 
-
-// routes.post("/api/login", function(req, res) {
-//   console.log("LOGIN")
-// })
 
 // need to create a DB post if user saves a stock
 //   db.Stocks.create({

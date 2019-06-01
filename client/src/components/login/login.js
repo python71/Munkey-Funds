@@ -4,6 +4,7 @@ import "./Login.css";
 import { FormControl, InputLabel, Input } from '@material-ui/core/';
 import axios from 'axios';
 import Header from '../header'
+import API from '../utils/API'
 
 class Login extends Component {
   constructor(props) {
@@ -30,37 +31,39 @@ class Login extends Component {
   }
 
   handleClick(event) {
-    var apiBaseUrl = "http://localhost:3001/api/";
-    var self = this;
+    API.getAllUsers().then(
+      (response) => {
+        console.log(response)
+      }
+      ).catch(
+        (err) => {
+          console.log(err);
+        }
+      );
+  
     
-    var payload = {
-      "firstname": this.state.firstname,
-      "lastname": this.state.lastname,
-      "email": this.state.username,
-      "password": this.state.password,
-      "goal": this.state.goal
-    }
 
-    axios.post(apiBaseUrl + 'login', payload)
-      .then(function (response) {
-        console.log(response);
+    // var payload = {
+    //   "firstname": this.state.firstname,
+    //   "lastname": this.state.lastname,
+    //   "email": this.state.username,
+    //   "password": this.state.password,
+    //   "goal": this.state.goal
+    // }
 
-        if (response.data.code == 200) {
-          console.log("Login successfull");
-          // var uploadScreen=[];
-          // uploadScreen.push(<UploadScreen appContext={self.props.appContext}/>)
-          // self.props.appContext.setState({loginPage:[],uploadScreen:uploadScreen})
-        }
-        else if (response.data.code == 204) {
-          console.log("Username password do not match");
-          alert("username password do not match")
-        } else {
-          console.log("Username does not exists");
-          alert("Username does not exist");
-        }
-      }).catch(function (error) {
-        console.log(error);
-      });
+  //   API.getAllUsers().then(
+  //     (response) => {
+        
+  //         console.log(response)
+  //     }
+  // ).catch(
+  //     (err) => {
+  //         console.log(err);
+  //     }
+  // );
+
+
+
   }
 
 
@@ -74,7 +77,7 @@ class Login extends Component {
             <FormControl margin="normal" required="true">
               <InputLabel>Email</InputLabel>
               <Input
-                id="standard-email-input"
+                id="email"
                 label="Email"
                 autoFocus
                 type="email"
@@ -91,7 +94,7 @@ class Login extends Component {
                 type="password"
               />
             </FormControl>
-            <Link to="/profile">
+            {/* <Link to="/profile"> */}
               <br></br><br></br>
               <button
                 // disabled={!this.validateForm()}
@@ -100,7 +103,7 @@ class Login extends Component {
               >
                 Login
           </button>
-            </Link>
+            {/* </Link> */}
             <Link to="/newuser"><button>New User</button></Link>
           </form>
         </div >

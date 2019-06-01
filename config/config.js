@@ -17,7 +17,7 @@ module.exports = {
   },
   "production": {
     "username": "root",
-    "password": null,
+    "password": "",
     "database": "monkeyFunds_production",
     "host": "127.0.0.1",
     "dialect": "mysql"

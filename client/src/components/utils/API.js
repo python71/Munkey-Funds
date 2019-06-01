@@ -6,12 +6,16 @@ export default {
   //-----------------------------
   // Saves a user to the database
   saveUser: userData => {
-    return axios.post("/api/signup", userData);
+    return axios.post("/api/users", userData);
+  },
+
+  getAllUsers: () => {
+    return axios.get("/api/users");
   },
   // Gets the user with the given id
-  getUser: id => {
-    return axios.get("/api/login" + id);
-  },
+  // getUser: id => {
+  //   return axios.get("/api/login" + id);
+  // },
 
   // CHART ROUTES
   // ----------------------------------
