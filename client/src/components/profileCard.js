@@ -73,8 +73,25 @@ class ProfileCard extends Component {
 		e.preventDefault();
 		console.log(this.state.searchOne);
 		// Make api call with this.state.search
+
+		// get users stock out of database
+		const userId = 3
+		// API.getQuotes({
+		// 	UserId: userId 
+		// }).then(res => 
+		// 	console.log(res.data),
+		// 	res.data.forEach(function(item) {
+		// 		console.log("Symbol: ", item.stock);
+		// 		 console.log("Shares", item.shares)
+		// 		})
+		// 	)
+
 		API.loadMultipleQuotes({ symbol: this.state.searchOne }).then(res =>
-			console.log(res)
+			// adds users stock to database
+			API.saveQuote({
+				stock: res.data[0].id,
+				UserId: userId
+			})
 		);
 	};
 

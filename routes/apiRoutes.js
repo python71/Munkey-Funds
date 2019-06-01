@@ -136,7 +136,36 @@ routes.post("/api/quotes", function (req, res) {
 //     // res.status(422).json(err.errors[0].message);
 //   });
 
-  routes.get("/api/getQuote", function(req, res) {
-    console.log("getQuote hit")
+  // adds users stock request into database
+  routes.post("/api/saveQuote", function(req, res) {
+    db.Stocks.create({
+      stock: req.body.stock,
+      UserId: req.body.UserId
+    })
+    .then(function (data) {
+      console.log(data);
+    })
+    .catch(function (err) {
+      console.log(err);
+      res.json(err);
+      // res.status(422).json(err.errors[0].message);
+    });    
   })
+
+  routes.post("/api/getQuote", function(req, res) {
+    console.log("/api/getQuote/ endpoint hit");
+    console.log(req.body.UserId);
+    db.Stocks.findAll({
+         where: {
+            UserId: req.body.UserId
+         }
+      }).then(function(user) {
+         console.log(user);
+         if (!user) {
+             res.status(400).send({ error: "User not found." });
+         }
+         res.json(user);
+      }).catch(err => console.log(err));
+    })
+
 module.exports = routes;
