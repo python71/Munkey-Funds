@@ -9,7 +9,7 @@ import { processData } from './helpers';
 import { generateNextDayPrediction } from './helpers';
 import { minMaxScaler } from './helpers';
 import { minMaxInverseScaler } from './helpers';
-import { print } from './helpers';
+// import { print } from './helpers';
 import  Plot  from './plot';
 import * as tf from "@tensorflow/tfjs";
 import fetch from 'node-fetch';
@@ -26,7 +26,9 @@ class Predict extends Component {
 
         this.state = {
             trainYInverse: [],
-            predictedXInverse: [],
+            predictedXInverse: {
+                data: []
+            },
             labels: []
         }
     }
@@ -45,10 +47,10 @@ class Predict extends Component {
                 // Crate the set for stock price prediction for the next day
                 let nextDayPrediction = generateNextDayPrediction(result.originalData, result.timePortion);
                 // Get the last date from the data set
-                let predictDate = (new Date(this.state.labels[this.state.labels.length-1] + 'T00:00:00.000')).addDays(1);
+                let predictDate = (new Date(self.state.labels[self.state.labels.length-1] + 'T00:00:00.000')).addDays(1);
     
                 // Build the Convolutional Tensorflow model
-                this.buildCnn(result).then(function (built) {
+                self.buildCnn(result).then(function (built) {
                     
                     // Transform the data to tensor data
                     // Reshape the data in neural network input format [number_of_samples, timePortion, 1];
@@ -62,7 +64,7 @@ class Predict extends Component {
                     
                     // Train the model using the tensor data
                     // Repeat multiple epochs so the error rate is smaller (better fit for the data)
-                    this.cnn(built.model, tensorData, epochs).then(function (model) {
+                    self.cnn(built.model, tensorData, epochs).then(function (model) {
                         
                         // Predict for the same train data
                         // We gonna show the both (original, predicted) sets on the graph 
@@ -84,7 +86,7 @@ class Predict extends Component {
                             // Get the next day predicted value
                             predictedX.data().then(function (pred) {
                                 // Revert the scaled feature
-                                this.state.predictedXInverse = minMaxInverseScaler(pred, min, max);
+                                self.setState({predictedXInverse: minMaxInverseScaler(pred, min, max)});
     
                                 // Convert Float32Array to regular Array, so we can add additional value
                                 this.state.predictedXInverse.data = Array.prototype.slice.call(this.state.predictedXInverse.data);
@@ -93,7 +95,7 @@ class Predict extends Component {
     
                                 // Revert the scaled labels from the trainY (original), 
                                 // so we can compare them with the predicted one
-                                this.state.trainYInverse = minMaxInverseScaler(built.data.trainY, min, max);
+                                self.setState({trainYInverse: minMaxInverseScaler(built.data.trainY, min, max)});
     
                                 // Plot the original (trainY) and predicted values for the same features set (trainX)
 
@@ -125,7 +127,7 @@ class Predict extends Component {
                     /*for (let i = result.epoch.length-1; i < result.epoch.length; ++i) {
                         print("Loss after Epoch " + i + " : " + result.history.loss[i]);
                     }*/
-                    print("Loss after last Epoch (" + result.epoch.length + ") is: " + result.history.loss[result.epoch.length-1]);
+                    // print("Loss after last Epoch (" + result.epoch.length + ") is: " + result.history.loss[result.epoch.length-1]);
                     resolve(model);
                 })
             }

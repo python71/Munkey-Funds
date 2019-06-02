@@ -123,15 +123,15 @@ Date.prototype.addDays = function(days) {
 
 /*
     Add text in the html view
-*/
-export function print(text) {
-    let el = document.getElementsByClassName('cnn')[0];
-    let elem = document.createElement('h5');
-    elem.innerHTML = text;
-    el.append(elem);
-    el.append(document.createElement('br'))
-    console.log(text)
-};
+// */
+// export function print(text) {
+//     let el = document.getElementsByClassName('cnn')[0];
+//     let elem = document.createElement('h5');
+//     elem.innerHTML = text;
+//     el.append(elem);
+//     el.append(document.createElement('br'))
+//     console.log(text)
+// };
 
 
 /*
