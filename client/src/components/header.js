@@ -7,6 +7,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
 import './style.css';
+import IconButton from '@material-ui/core/IconButton';
 
 const theme = createMuiTheme({
   palette: {
@@ -24,11 +25,12 @@ function Header(props) {
       <MuiThemeProvider theme={theme}>
         <AppBar className="top-header" position="static" color="primary">
           <Toolbar>
+            {/* img src={require("../static/images/monkeylogo-02.png")}> */}
             <Grid container justify="center">
-              <Typography variant="h6" color="inherit">
+               <Typography variant="h6" color="inherit">
                 Monkey Money
-            </Typography>
-            </Grid>
+            </Typography> 
+            </Grid> 
           </Toolbar>
         </AppBar>
       </MuiThemeProvider>

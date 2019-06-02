@@ -121,65 +121,80 @@ class Login extends Component {
         <Header />
         <Grid container justify="center">
           <Card className={classes.card}>
-            <CardHeader
-              title="Login"
-              subheader=""
-            />
-            <div className="Login">
-              <form onSubmit={this.handleSubmit}>
-                <FormControl margin="normal" required="true">
-                  <InputLabel>Email</InputLabel>
-                  <Input
-                    id="email"
-                    label="Email"
-                    autoFocus
-                    type="email"
-                    value={this.state.email}
-                    onChange={this.handleChange}
-                  />
-                </FormControl>
-                <FormControl margin="normal" required="true">
-                  <InputLabel>Password</InputLabel>
-                  <Input
-                    id="password"
-                    value={this.state.password}
-                    onChange={this.handleChange}
-                    type="password"
-                  />
-                </FormControl>
-                <Link className="page-link" to="/profile">
-                  <br></br><br></br>
-                  <Button className="page-button"
-                    // disabled={!this.validateForm()}
-                    variant="outlined"
-                    size="small"
-                    type="submit"
-                    onClick={(event) => this.handleClick(event)}>
-                    Login</Button>
-                </Link>
-                <Link className="page-link" to="/newuser" underline="none">
-                  <Button className="page-button"
-                    variant="outlined"
-                    size="small">
-                    New User</Button>
-                </Link>
-              </form>
-            </div >
-            <CardActions className={classes.actions} disableActionSpacing>
-              <IconButton
-                className={classnames(classes.expand, {
-                  [classes.expandOpen]: this.state.expanded
-                })}
-                onClick={this.handleExpandClick}
-                aria-expanded={this.state.expanded}
-                aria-label="Show more"
+            <CardContent>
+              <CardHeader
+                title="Login"
+                subheader=""
+              />
+              <div className="Login">
+                <form onSubmit={this.handleSubmit}>
+                  <FormControl margin="normal" required="true" fullWidth="true">
+                    <InputLabel>Email</InputLabel>
+                    <Input
+                      id="email"
+                      label="Email"
+                      autoFocus
+                      type="email"
+                      value={this.state.email}
+                      onChange={this.handleChange}
+                    />
+                  </FormControl>
+                  <FormControl margin="normal" required="true" fullWidth="true">
+                    <InputLabel>Password</InputLabel>
+                    <Input
+                      id="password"
+                      value={this.state.password}
+                      onChange={this.handleChange}
+                      type="password"
+                    />
+                  </FormControl>
+                  <Link className="page-link" to="/profile">
+                    <br></br><br></br>
+                    <Button className="page-button"
+                      // disabled={!this.validateForm()}
+                      variant="outlined"
+                      size="small"
+                      type="submit"
+                      onClick={(event) => this.handleClick(event)}>
+                      Login</Button>
+                  </Link>
+                </form>
+              </div >
+              <CardActions className={classes.actions} disableActionSpacing>
+                {/* <Link className="page-link" to="/newuser" underline="none"> 
+              <Button className="page-button"
+                size="small"
+              className={classnames(classes.expand, {
+                [classes.expandOpen]: this.state.expanded
+              })}
+              onClick={this.handleExpandClick}
+              aria-expanded={this.state.expanded}
+              aria-label="Show more"
               >
-                <ExpandMoreIcon />
-              </IconButton>
-            </CardActions>
-            <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-              <NewUser />
-            </Collapse>
+                New User</Button>
+               </Link>  */}
+                <Button
+                  // className={classnames(classes.expand, {
+                  //   [classes.expandOpen]: this.state.expanded
+                  // })}
+                  // onClick={this.handleExpandClick}
+                  // aria-expanded={this.state.expanded}
+                  // aria-label="Show more"
+                  size="small"
+                >
+                  New User <ExpandMoreIcon
+                    className={classnames(classes.expand, {
+                      [classes.expandOpen]: this.state.expanded
+                    })}
+                    onClick={this.handleExpandClick}
+                    aria-expanded={this.state.expanded}
+                    aria-label="Show more" />
+                </Button>
+              </CardActions>
+              <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+                <NewUser />
+              </Collapse>
+            </CardContent>
           </Card>
         </Grid>
       </div>

@@ -1,5 +1,5 @@
 body {
-  background-color: #fffde7;
+  background-image: url("../static/images/cityscape-login-page.jpg");
 }
 
 .container {
@@ -9,10 +9,6 @@ body {
 
 .top-header {
   margin-bottom: 5%;
-}
-
-.header-bg {
-  background-color: #00bcd4;
 }
 
 h2 {
