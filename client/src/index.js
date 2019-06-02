@@ -5,5 +5,5 @@ import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 import Prediction from "./pages/Prediction/Prediction"
 
-ReactDOM.render(<Prediction company={'googl'}/>, document.getElementById("root"));
+ReactDOM.render(<App/>, document.getElementById("root"));
 registerServiceWorker();

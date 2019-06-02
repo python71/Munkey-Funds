@@ -32,12 +32,13 @@ class Predict extends Component {
     }
 
     componentDidMount(){
+        let self = this;
         let url = `https://api.iextrading.com/1.0/stock/${this.props.company}/chart/1y`
         fetch(url)
         .then(res => res.json())
         .then(function(data) {
             // alert('data')
-            this.state.labels = data.map((val) => { return val['date']; });
+            self.setState({labels: data.map((val) => { return val['date'];}) })
 
             processData(data, timePortion).then(function (result) {
 

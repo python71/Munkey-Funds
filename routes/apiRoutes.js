@@ -18,7 +18,7 @@ routes.post("/api/users", function (req, res) {
 });
 
 routes.get("/api/users", (req, res) => {
-  db.User.find().then(
+  db.User.findAll().then(
       (data) => {
           res.json(data);
       }

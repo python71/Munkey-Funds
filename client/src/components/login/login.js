@@ -5,6 +5,8 @@ import { FormControl, InputLabel, Input } from '@material-ui/core/';
 import axios from 'axios';
 import Header from '../header'
 import API from '../utils/API'
+import { Redirect } from 'react-router-dom'
+
 
 class Login extends Component {
   constructor(props) {
@@ -12,8 +14,31 @@ class Login extends Component {
 
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      data:[],
+      redirect: false,
+      userData: []
     };
+
+  }
+
+  componentDidMount() {
+    let self = this;
+
+    fetch('/api/users', {
+        method: 'GET'
+    }).then(function(response) {
+        if (response.status >= 400) {
+            throw new Error("Bad response from server");
+        }
+        return response.json();
+    }).then(function(data) {
+        console.log(data)
+        self.setState({data: data})
+
+    }).catch(err => {
+    console.log('caught it!',err);
+    }) 
   }
 
   validateForm() {
@@ -21,52 +46,49 @@ class Login extends Component {
   }
 
   handleChange = event => {
+    const { name, value } = event.target;
     this.setState({
-      [event.target.id]: event.target.value
+      [name]: value
     });
-  }
+  };
 
   handleSubmit = event => {
     event.preventDefault();
   }
 
   handleClick(event) {
-    API.getAllUsers().then(
-      (response) => {
-        console.log(response)
+    let self = this;
+    console.log("email: ", this.state.email)
+    console.log("password: ", this.state.password)
+    console.log("data: ", this.state.data)
+    this.state.data.forEach(function(e) {
+     
+      if(e.email === self.state.email && e.password === self.state.password) {
+        // alert('logged in!')
+        console.log("login successful!")
+      
+        self.setState({userData: e, redirect: true})
+     
       }
-      ).catch(
-        (err) => {
-          console.log(err);
-        }
-      );
+    })
   
-    
-
-    // var payload = {
-    //   "firstname": this.state.firstname,
-    //   "lastname": this.state.lastname,
-    //   "email": this.state.username,
-    //   "password": this.state.password,
-    //   "goal": this.state.goal
-    // }
-
-  //   API.getAllUsers().then(
-  //     (response) => {
-        
-  //         console.log(response)
-  //     }
-  // ).catch(
-  //     (err) => {
-  //         console.log(err);
-  //     }
-  // );
-
-
-
   }
 
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return (
+        <Redirect to={{
+          pathname: '/profile',
+          state: { userData: this.state.userData }
+        }}
+/>
+      )
+    }
+  }
 
+  handleSubmission() {
+
+  }
 
   render() {
     return (
@@ -81,7 +103,7 @@ class Login extends Component {
                 label="Email"
                 autoFocus
                 type="email"
-                value={this.state.email}
+                name="email"
                 onChange={this.handleChange}
               />
             </FormControl>
@@ -89,21 +111,23 @@ class Login extends Component {
               <InputLabel>Password</InputLabel>
               <Input
                 id="password"
-                value={this.state.password}
+                name="password"
                 onChange={this.handleChange}
                 type="password"
               />
             </FormControl>
-            {/* <Link to="/profile"> */}
+            
               <br></br><br></br>
-              <button
-                // disabled={!this.validateForm()}
-                type="submit"
-                onClick={(event) => this.handleClick(event)}
-              >
-                Login
-          </button>
-            {/* </Link> */}
+              <div>
+              {this.renderRedirect()}
+                <button
+                  // disabled={!this.validateForm()}
+                  type="submit"
+                  onClick={(event) => this.handleClick(event)}
+                >
+                  Login
+                </button>
+              </div>
             <Link to="/newuser"><button>New User</button></Link>
           </form>
         </div >

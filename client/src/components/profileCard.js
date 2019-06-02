@@ -57,7 +57,16 @@ const styles = theme => ({
   }
 });
 class ProfileCard extends Component {
-  state = { expanded: false, searchOne: "", searchTwo: "", searchThree: "" };
+  constructor(props) {
+		super(props);
+	
+		this.state = { expanded: false, userData: [], searchOne: "", searchTwo: "", searchThree: "" };
+	}
+  
+  componentWillMount() {
+    this.setState({userData: this.props.userData})
+
+  }
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
   };
@@ -82,7 +91,7 @@ class ProfileCard extends Component {
 							</Avatar>
             }
             action={<IconButton>{/* <MoreVertIcon /> */}</IconButton>}
-            title="Jesse Doe"
+            title={this.state.userData.firstname}
             subheader="Welcome Back!"
           />
           <CardMedia
@@ -118,8 +127,8 @@ class ProfileCard extends Component {
                 Search
 							</Button>
             </Grid>
-            <Typography variant="h5" style={{ marginTop: 30 }}>
-              Investment Goal: Long-Term Growth
+            <Typography variant="h5" style={{ marginTop: 30 }} >
+              {this.state.userData.goal}
 						</Typography>
           </CardContent>
           <CardActions className={classes.actions} disableActionSpacing>
