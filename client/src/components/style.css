@@ -7,6 +7,10 @@ body {
   margin: auto;
 }
 
+.top-header {
+  margin-bottom: 5%;
+}
+
 .header-bg {
   background-color: #00bcd4;
 }
@@ -18,6 +22,7 @@ h2 {
 
 .page-link {
   text-decoration: none;
+  margin: 0.5em;
 }
 
 

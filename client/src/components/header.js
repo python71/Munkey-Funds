@@ -6,6 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
+import './style.css';
 
 const theme = createMuiTheme({
   palette: {
@@ -21,7 +22,7 @@ function Header(props) {
   return (
     <div className={classes.root}>
       <MuiThemeProvider theme={theme}>
-        <AppBar position="static" color="primary">
+        <AppBar className="top-header" position="static" color="primary">
           <Toolbar>
             <Grid container justify="center">
               <Typography variant="h6" color="inherit">
