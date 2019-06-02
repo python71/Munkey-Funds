@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import { FormControl, InputLabel, Input } from "@material-ui/core/";
-import axios from "axios";
+import { FormControl, InputLabel, Input, Form } from "@material-ui/core/";
 import { Link } from "react-router-dom";
 import API from "../utils/API";
-import Header from "../header";
+import CardActions from '@material-ui/core/CardActions';
+import Button from '@material-ui/core/Button';
+import "../style.css";
+import "./NewUser.css";
 
 class NewUser extends Component {
   state = {
@@ -58,9 +60,8 @@ class NewUser extends Component {
   render() {
     return (
       <div>
-        <Header />
-        <div className="container">
-          <FormControl margin="normal" required>
+        <div className="newuser-form">
+          <FormControl margin="normal" required fullWidth="true">
             <InputLabel>First Name</InputLabel>
             <Input
               id="first-name"
@@ -72,7 +73,7 @@ class NewUser extends Component {
             />
           </FormControl>
           <br />
-          <FormControl margin="normal" required>
+          <FormControl margin="normal" required fullWidth="true">
             <InputLabel>Last Name</InputLabel>
             <Input
               id="Last-name"
@@ -84,7 +85,7 @@ class NewUser extends Component {
             />
           </FormControl>
           <br />
-          <FormControl margin="normal" required>
+          <FormControl margin="normal" required fullWidth="true">
             <InputLabel>Email</InputLabel>
             <Input
               id="standard-email-input"
@@ -96,7 +97,7 @@ class NewUser extends Component {
             />
           </FormControl>
           <br />
-          <FormControl margin="normal" required>
+          <FormControl margin="normal" required fullWidth="true">
             <InputLabel>Password</InputLabel>
             <Input
               id="standard-password-input"
@@ -107,7 +108,7 @@ class NewUser extends Component {
             />
           </FormControl>
           <br />
-          <FormControl margin="normal" fullwidth="true">
+          <FormControl margin="normal" fullWidth="true">
             <InputLabel>Goal</InputLabel>
             <Input
               id="financial-goal"
@@ -120,11 +121,17 @@ class NewUser extends Component {
           </FormControl>
           <br />
           <br />
-          <Link to="/profile">
-            <button onClick={() => this.handleFormSubmit()}>Submit</button>
-          </Link>
+          <CardActions>
+            <Link className="page-link" to="/profile">
+              <Button className="page-button"
+                variant="outlined"
+                size="small"
+                onClick={() => this.handleFormSubmit()}>
+                Submit</Button>
+            </Link>
+          </CardActions>
         </div>
-      </div>
+      </div >
     );
   }
 }
