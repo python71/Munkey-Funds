@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { FormControl, InputLabel, Input } from "@material-ui/core/";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import API from "../utils/API";
 import Header from "../header";
+import Button from '@material-ui/core/Button';
 
 class NewUser extends Component {
   state = {
@@ -120,8 +120,11 @@ class NewUser extends Component {
           </FormControl>
           <br />
           <br />
-          <Link to="/profile">
-            <button onClick={() => this.handleFormSubmit()}>Submit</button>
+          <Link className="page-link" to="/profile">
+            <Button
+              variant="outlined"
+              onClick={() => this.handleFormSubmit()}>
+              Submit</Button>
           </Link>
         </div>
       </div>

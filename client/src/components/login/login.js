@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { Link, BrowserRouter as Router } from 'react-router-dom';
 import "./Login.css";
+import "../style.css";
 import { FormControl, InputLabel, Input } from '@material-ui/core/';
 import axios from 'axios';
-import Header from '../header'
+import Header from '../header';
+import Button from '@material-ui/core/Button';
 
 class Login extends Component {
   constructor(props) {
@@ -91,17 +93,22 @@ class Login extends Component {
                 type="password"
               />
             </FormControl>
-            <Link to="/profile">
+            <Link className="page-link" to="/profile">
               <br></br><br></br>
-              <button
+              <Button
                 // disabled={!this.validateForm()}
+                variant="outlined"
+                size="small"
                 type="submit"
-                onClick={(event) => this.handleClick(event)}
-              >
-                Login
-          </button>
+                onClick={(event) => this.handleClick(event)}>
+                Login</Button>
             </Link>
-            <Link to="/newuser"><button>New User</button></Link>
+            <Link className="page-link" to="/newuser" underline="none">
+              <Button
+                variant="outlined"
+                size="small">
+                New User</Button>
+            </Link>
           </form>
         </div >
       </div>
