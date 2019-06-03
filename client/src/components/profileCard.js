@@ -64,16 +64,17 @@ class ProfileCard extends Component {
     searchTwo: "",
     searchThree: "",
 	newsFeed: [],
-	userId: ""
+	userId: "2"
   };
+
   handleExpandClick = () => {
-    this.setState(state => ({ expanded: !state.expanded, userId: 2 }));
+    this.setState(state => ({ expanded: !state.expanded}));
     // this.setState({userId: 2});
     var stockSymbols = [];
     var newsArray = [];
     var temp;
-
-    API.getQuotes({ UserId: 2 })
+	console.log(this.state.userId)
+    API.getQuotes({ UserId: this.state.userId })
       .then(res =>
         // console.log(res.data),
         res.data.forEach(function(item) {
