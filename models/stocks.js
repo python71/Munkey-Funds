@@ -14,9 +14,6 @@ module.exports = function (sequelize, DataTypes) {
     shares: {
       type: DataTypes.INTEGER,
     },
-    stock_value: {
-      type: DataTypes.INTEGER,
-    },
     ownerId: {
       type: DataTypes.INTEGER
     }

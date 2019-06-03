@@ -15,93 +15,46 @@ class StockChart extends Component {
     super(props);
     this.state = {
       allData: [],
-      stockBtns: [
-        {
-          "symbol": ''
-        }
-      ],
+      // stockBtns: this.props.stockBtns,
+      stockBtns: this.props.stockBtns,
       // dummy data to create the graph structure while waiting for the api request
-      data: [
-        {
-          "id": "stock",
-          // "color": "hsl(255, 70%, 50%)",
-          "data": [
-            {
-              "x": "a",
-              "y": 1
-            },
-            {
-              "x": "b",
-              "y": 1
-            },
-            {
-              "x": "c",
-              "y": 1
-            },
-            {
-              "x": "d",
-              "y": 1
-            },
-            {
-              "x": "e",
-              "y": 1
-            },
-            {
-              "x": "f",
-              "y": 1
-            },
-            {
-              "x": "g",
-              "y": 1
-            },
-            {
-              "x": "h",
-              "y": 1
-            },
-            {
-              "x": "i",
-              "y": 1
-            },
-            {
-              "x": "j",
-              "y": 1
-            },
-            {
-              "x": "k",
-              "y": 1
-            },
-            {
-              "x": "l",
-              "y": 2
-            }
-          ]
-        }
-      ]
+      userStocks: this.props.userStocks,
+      historicData: this.props.historicData
     }
   }
 
 
   componentDidMount() {
-    const userId = this.props.userId
-    var stockSymbols = []
-    var stockArray = []
-    var temp
-    API.getQuotes({UserId: userId}).then(res => 
-      // console.log(res.data),
-      res.data.forEach(function(item) {
-      stockSymbols.push(item.stock)
-      stockArray.push({symbol:item.stock})
-      console.log("item.stock: ", item.stock)
-      })
-      ).then(res => {
-      temp = stockSymbols.toString()
-      API.loadMultipleQuotes({ temp }).then(res => 
-        this.setState({
-          data: res.data,
-          stockBtns: stockArray,
-          allData: res.data
-        }))
-        })
+    console.log("stockBtns", this.state.stockBtns)
+    console.log("historicData", this.state.historicData)
+    // var stockSymbols = []
+    // var stockArray = []
+    // let temp;
+    // this.state.userStocks.forEach(function(el) {
+    //   stockSymbols.push(el.ticker)
+      
+
+    //   API.loadMultipleQuotes({ temp }).then(res => 
+    //     this.setState({
+    //       data: res.data,
+    //       stockBtns: stockArray,
+    //       allData: res.data
+    //     }))
+    // })
+    // const userId = this.props.userId
+    // var temp;
+
+    // API.getQuotes({UserId: userId}).then(res => 
+    //   // console.log(res.data),
+    //   res.data.forEach(function(item) {
+    //   stockSymbols.push(item.stock)
+    //   stockArray.push({symbol:item.stock})
+    //   console.log("item.stock: ", item.stock)
+    //   })
+    //   ).then(res => {
+    //   temp = stockSymbols.toString()
+    
+        // })
   };
 
   // click event for stock chart buttons - will display the data for whichever stocks are chosen
@@ -133,8 +86,8 @@ class StockChart extends Component {
     return (
       <div style={{ height: '400px', width: '600px' }}>
         <h1>Chart</h1>
-        {this.state && this.state.data.length > -1 && <ResponsiveLine
-          data={this.state.data}
+        {this.state && this.state.historicData.length > -1 && <ResponsiveLine
+          data={this.state.historicData}
           margin={{ top: 50, right: 110, bottom: 80, left: 60 }}
           xScale={{ type: 'point' }}
           yScale={{ type: 'linear', stacked: false, min: 'auto', max: 'auto' }}

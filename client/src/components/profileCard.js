@@ -66,16 +66,22 @@ class ProfileCard extends Component {
       searchOne: "", 
       searchTwo: "", 
       searchThree: "",
-      userData: this.props.userData };
+      userData: this.props.userData,
+      historicData: []
+     };
 	}
   
   componentWillMount() {
     this.setState({userData: this.props.userData});
-    this.getStocks();
+    let historicData = [];
+    this.getStocks() 
+
+
+   
+  
+  
 
     
-    // this.getHistoricData();
-
   }
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
@@ -91,6 +97,8 @@ class ProfileCard extends Component {
   };
 
   getStocks() {
+    let historicData = [];
+    let tickers = [];
     let self = this;
 		fetch('/api/quotes', {
 			method: 'GET'
@@ -108,7 +116,20 @@ class ProfileCard extends Component {
           userStocks.push(e)
         }
       })
-			self.setState({stocks: userStocks})
+      self.setState({
+        stocks: userStocks
+      }, () => {
+        self.state.stocks.forEach((el) => {
+          historicData.push(self.getHistoricData(el.ticker))
+          tickers.push(el.ticker)
+        })
+        self.setState({
+          historicData: historicData,
+          tickers: tickers
+        });
+      })
+      
+
 	
 		}).catch(err => {
 		console.log('caught it!',err);
@@ -116,21 +137,24 @@ class ProfileCard extends Component {
     console.log(self.state.stocks)
   }
 
-  // getHistoricData(ticker) {
-  //   let self = this;
-  //   let url = `https://api.iextrading.com/1.0/stock/${ticker}/chart/1y`
-  //   fetch(url)
-  //   .then(res => res.json())
-  //   .then(function(data) {
-  //     console.log("api: ", data)
+  getHistoricData(ticker) {
+    let historicData = []
+    let self = this;
+    let url = `https://api.iextrading.com/1.0/stock/${ticker}/chart/1y`
+    fetch(url)
+    .then(res => res.json())
+    .then(function(data) {
+      data.forEach((el) => {
+        historicData.push(el.close)
+      });
     
-  //     self.setState({historicData: data});
-  //     console.log("stockChart Data: ", data)
-  //     return data;
 
-
-  //   });
-  // }
+      console.log("stockChart Data: ", historicData)
+      
+      
+    });
+    return historicData;
+  }
   render() {
     const { classes } = this.props;
     return (
@@ -201,8 +225,10 @@ class ProfileCard extends Component {
                 stocks={this.state.stocks}
               />
               <StockChart 
-                stocks={this.state.stocks}
+                userStocks={this.state.stocks}
                 userId={this.state.userData.id}
+                historicData={this.state.historicData}
+                stockBtns={this.state.tickers}
               />
               <br /><br /><br /><br /><br /><br /><br /><br />
               <Typography paragraph style={{ marginTop: 15 }}>

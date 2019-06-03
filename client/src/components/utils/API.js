@@ -13,14 +13,6 @@ export default {
     return axios.get("/api/users");
   },
 
-
-
-
-
-
-
-
-
   getUser: id => {
     return axios.get("/api/login" + id);
   },
