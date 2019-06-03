@@ -14,15 +14,10 @@ class StockChart extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      allData: [],
       stockBtns: [
         {
-          "symbol": 'fb'
-        },
-        {
-          "symbol": 'aapl',
-        },
-        {
-          "symbol": 'fslr'
+          "symbol": ''
         }
       ],
       // dummy data to create the graph structure while waiting for the api request
@@ -87,38 +82,50 @@ class StockChart extends Component {
 
 
   componentDidMount() {
-    API.loadMultipleQuotes({ symbol: "aapl,fb,fslr" })
-      .then(res => {
-        console.log(res.data)
-        this.setState({
-          data: res.data
-        })
-        // console.log(res.data[0].news)
-      });
+	const userId = this.props.user
+	var stockSymbols = []
+	var stockArray = []
+	var temp
+	API.getQuotes({UserId: userId}).then(res => 
+	  // console.log(res.data),
+	  res.data.forEach(function(item) {
+    stockSymbols.push(item.stock)
+    stockArray.push({symbol:item.stock})
+		})
+	  ).then(res => {
+		temp = stockSymbols.toString()
+    API.loadMultipleQuotes({ temp }).then(res => 
+      this.setState({
+        data: res.data,
+        stockBtns: stockArray,
+        allData: res.data
+      }))
+		  })
   };
 
   // click event for stock chart buttons - will display the data for whichever stocks are chosen
   ChartButtonClick = (button) => {
     console.log(`click! ${button}`);
-    API.loadMultipleQuotes({ symbol: button })
+    API.loadSingleQuote({ symbol: button })
       .then(res => {
         console.log(res.data)
         this.setState({
-          data: res.data
+          data: res.data,
         })
         // console.log(res.data)
       });
   };
 
   AllButtonClick = () => {
-    API.loadMultipleQuotes({ symbol: "fslr,fb,aapl" })
-      .then(res => {
-        console.log(res.data)
-        this.setState({
-          data: res.data
-        })
-        // console.log(res.data)
-      });
+    // API.loadSingleQuote( this.state.stockBtns )
+    //   .then(res => {
+    //     console.log(res.data)
+    //     this.setState({
+    //       data: res.data
+    //     })
+    //     // console.log(res.data)
+    //   });
+    this.setState({data: this.state.allData})
   };
 
   render() {

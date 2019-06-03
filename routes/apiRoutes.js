@@ -4,7 +4,7 @@ const axios = require("axios");
 require("dotenv").config("../.env");
 
 // CREATE NEW USER
-routes.post("/api/signup", function (req, res) {
+routes.post("/api/signup", function(req, res) {
   console.log(req.body);
   db.User.create({
     firstname: req.body.firstname,
@@ -13,11 +13,11 @@ routes.post("/api/signup", function (req, res) {
     password: req.body.password,
     goal: req.body.goal
   })
-    .then(function (data) {
+    .then(function(data) {
       console.log(data);
       res.redirect(307, "/api/login");
     })
-    .catch(function (err) {
+    .catch(function(err) {
       console.log(err);
       res.json(err);
       // res.status(422).json(err.errors[0].message);
@@ -60,12 +60,13 @@ routes.post("/api/signup", function (req, res) {
 //     });
 // });
 
-
 // multiple stock lookup
-routes.post("/api/quotes", function (req, res) {
+routes.post("/api/quotes", function(req, res) {
   console.log("/api/quotes endpoint hit.");
-  const { symbol } = req.body;
-  // console.log(symbol);
+  const symbol = req.body.temp;
+  // const {symbol} = req.body;
+  console.log(req.body);
+  console.log(symbol);
   let data = [];
   // db.Stocks.findAll({
   //   where: ({
@@ -83,7 +84,9 @@ routes.post("/api/quotes", function (req, res) {
   //   });
   axios
     .get(
-      `https://cloud.iexapis.com/v1/stock/market/batch?token=${process.env.API_KEY}&symbols=${symbol}&types=news,chart&range=1m`
+      `https://cloud.iexapis.com/v1/stock/market/batch?token=${
+        process.env.API_KEY
+      }&symbols=${symbol}&types=news,chart&range=1m`
     )
     .then(response => {
       // console.log(response.data);
@@ -99,36 +102,36 @@ routes.post("/api/quotes", function (req, res) {
             x: dailyData.date,
             y: dailyData.close
           });
-        })
+        });
         data.push(payLoad);
         // pulls news data for the newsfeed
         response.data[key].news.forEach(dailyNews => {
           payLoad.news.push({
             relatedStock: dailyNews.related,
+            summary: dailyNews.summary,
+            source: dailyNews.source,
             headline: dailyNews.headline,
             link: dailyNews.url
-          })
-        })
+          });
+        });
       }
       // console.log(data);
       res.json(data);
     })
-    .then(err => console.log("NOOOOOOO!!!! Errors again."));
+    .catch(err => console.log("NOOOOOOO!!!! Errors again."));
 });
 
-routes.get('/api/chart/stocks/all', (req, res) => {
+routes.get("/api/chart/stocks/all", (req, res) => {
   db.Stocks.findAll({
     where: {
       UserID: 2
     }
-  })
-    .then(stocks => {
-      console.log('getting info');
-      console.log(stocks);
-      res.json(stocks);
-    });
+  }).then(stocks => {
+    console.log("getting info");
+    console.log(stocks);
+    res.json(stocks);
+  });
 });
-
 
 // routes.post("/api/login", function(req, res) {
 //   console.log("LOGIN")
@@ -150,35 +153,83 @@ routes.get('/api/chart/stocks/all', (req, res) => {
 //     // res.status(422).json(err.errors[0].message);
 //   });
 
-  // adds users stock request into database
-  routes.post("/api/saveQuote", function(req, res) {
-    db.Stocks.create({
-      stock: req.body.stock,
-      UserId: req.body.UserId
-    })
-    .then(function (data) {
+// adds users stock request into database
+routes.post("/api/saveQuote", function(req, res) {
+  db.Stocks.create({
+    stock: req.body.stock,
+    UserId: req.body.UserId
+  })
+    .then(function(data) {
       console.log(data);
     })
-    .catch(function (err) {
+    .catch(function(err) {
       console.log(err);
       res.json(err);
       // res.status(422).json(err.errors[0].message);
-    });    
+    });
+});
+
+routes.post("/api/getQuote", function(req, res) {
+  console.log("/api/getQuote/ endpoint hit");
+  console.log(req.body.UserId);
+  db.Stocks.findAll({
+    where: {
+      UserId: req.body.UserId
+    }
   })
-
-  routes.post("/api/getQuote", function(req, res) {
-    console.log("/api/getQuote/ endpoint hit");
-    console.log(req.body.UserId);
-    db.Stocks.findAll({
-         where: {
-            UserId: req.body.UserId
-         }
-      }).then(function(user) {
-         if (!user) {
-             res.status(400).send({ error: "User not found." });
-         }
-         res.json(user);
-      }).catch(err => console.log(err));
+    .then(function(user) {
+      if (!user) {
+        res.status(400).send({ error: "User not found." });
+      }
+      res.json(user);
     })
+    .catch(err => console.log(err));
+});
 
+// single stock lookup
+routes.post("/api/single/quote", function(req, res) {
+  console.log("/api/quotes endpoint hit.");
+  const { symbol } = req.body;
+  // const {symbol} = req.body;
+  console.log(req.body);
+  console.log(symbol);
+  let data = [];
+  axios
+    .get(
+      `https://cloud.iexapis.com/v1/stock/market/batch?token=${
+        process.env.API_KEY
+      }&symbols=${symbol}&types=news,chart&range=1m`
+    )
+    .then(response => {
+      // console.log(response.data);
+      for (let key in response.data) {
+        let payLoad = {
+          id: key,
+          data: [],
+          news: []
+        };
+        // pulling the X and Y coordinates for the chart
+        response.data[key].chart.forEach(dailyData => {
+          payLoad.data.push({
+            x: dailyData.date,
+            y: dailyData.close
+          });
+        });
+        data.push(payLoad);
+        // pulls news data for the newsfeed
+        response.data[key].news.forEach(dailyNews => {
+          payLoad.news.push({
+            relatedStock: dailyNews.related,
+            summary: dailyNews.summary,
+            source: dailyNews.source,
+            headline: dailyNews.headline,
+            link: dailyNews.url
+          });
+        });
+      }
+      // console.log(data);
+      res.json(data);
+    })
+    .catch(err => console.log("NOOOOOOO!!!! Errors again."));
+});
 module.exports = routes;
