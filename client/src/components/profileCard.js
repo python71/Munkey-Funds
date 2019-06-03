@@ -58,7 +58,7 @@ const styles = theme => ({
 	}
 });
 class ProfileCard extends Component {
-	state = { expanded: false, searchOne: "", searchTwo: "", searchThree: "" };
+	state = { expanded: false, searchOne: "", searchTwo: "", searchThree: "", newsFeed: ""};
 	handleExpandClick = () => {
 		this.setState(state => ({ expanded: !state.expanded }));
 	};
@@ -75,7 +75,7 @@ class ProfileCard extends Component {
 		// Make api call with this.state.search
 
 		// get users stock out of database
-		const userId = 3
+		const userId = 2
 		// API.getQuotes({
 		// 	UserId: userId 
 		// }).then(res => 
@@ -87,12 +87,36 @@ class ProfileCard extends Component {
 		// 	)
 
 		API.loadMultipleQuotes({ symbol: this.state.searchOne }).then(res =>
-			// adds users stock to database
 			API.saveQuote({
 				stock: res.data[0].id,
 				UserId: userId
-			})
-		);
+			}).then(console.log(res))
+				)
+
+
+			// adds users stock to database
+		// 	API.saveQuote({
+		// 		stock: res.data[0].id,
+		// 		UserId: userId
+		// 	}).then(console.log(res))
+		// );
+
+		// var stockSymbols = []
+		// var stockString = ''
+		// var temp
+		// API.getQuotes({UserId: userId}).then(res => 
+		// 	// console.log(res.data),
+		// 	res.data.forEach(function(item) {
+		// 	console.log("Symbol: ", item.stock);
+		// 	console.log("Shares", item.shares)
+		// 	stockSymbols.push(item.stock)
+		// 	})
+		// 	).then(res => {
+		// 	// console.log(stockSymbols),
+		// 	temp = stockSymbols.toString()
+		// 	console.log(temp)
+		// 	const userSymbolsFromDb = temp
+		// 		})}
 	};
 
 	render() {

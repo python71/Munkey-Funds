@@ -1,6 +1,7 @@
 const db = require("../models");
 const routes = require("express").Router();
 const axios = require("axios");
+require("dotenv").config("../.env");
 
 // CREATE NEW USER
 routes.post("/api/signup", function (req, res) {
@@ -82,7 +83,7 @@ routes.post("/api/quotes", function (req, res) {
   //   });
   axios
     .get(
-      `https://cloud.iexapis.com/v1/stock/market/batch?token=pk_7dd5e2c663ec4be98e3743606acb40d3&symbols=${symbol}&types=news,chart&range=1m`
+      `https://cloud.iexapis.com/v1/stock/market/batch?token=${process.env.API_KEY}&symbols=${symbol}&types=news,chart&range=1m`
     )
     .then(response => {
       // console.log(response.data);
@@ -160,7 +161,6 @@ routes.post("/api/quotes", function (req, res) {
             UserId: req.body.UserId
          }
       }).then(function(user) {
-         console.log(user);
          if (!user) {
              res.status(400).send({ error: "User not found." });
          }
