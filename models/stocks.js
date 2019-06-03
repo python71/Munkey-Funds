@@ -3,7 +3,7 @@ module.exports = function (sequelize, DataTypes) {
   var Stocks = sequelize.define("Stocks", {
     ticker: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     company: {
       type: DataTypes.STRING,

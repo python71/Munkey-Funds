@@ -1,6 +1,7 @@
 const db = require("../models");
 const routes = require("express").Router();
 const axios = require("axios");
+require("dotenv").config("../.env");
 
 // CREATE NEW USER
 routes.post("/api/users", function (req, res) {
@@ -103,9 +104,13 @@ routes.post("/api/quotes", function(req, res) {
   //   });
   axios
     .get(
+<<<<<<< HEAD
       `https://cloud.iexapis.com/v1/stock/market/batch?token=${
         process.env.API_KEY
       }&symbols=${symbol}&types=news,chart&range=1m`
+=======
+      `https://cloud.iexapis.com/v1/stock/market/batch?token=${process.env.API_KEY}&symbols=${symbol}&types=chart&range=1m`
+>>>>>>> origin/master
     )
     .then(response => {
       // console.log(response.data);
@@ -127,12 +132,19 @@ routes.post("/api/quotes", function(req, res) {
         response.data[key].news.forEach(dailyNews => {
           payLoad.news.push({
             relatedStock: dailyNews.related,
+<<<<<<< HEAD
             summary: dailyNews.summary,
             source: dailyNews.source,
             headline: dailyNews.headline,
             link: dailyNews.url
           });
         });
+=======
+            headline: dailyNews.headline,
+            link: dailyNews.url
+          })
+        })
+>>>>>>> origin/master
       }
       // console.log(data);
       res.json(data);
@@ -140,6 +152,7 @@ routes.post("/api/quotes", function(req, res) {
     .catch(err => console.log("NOOOOOOO!!!! Errors again."));
 });
 
+<<<<<<< HEAD
 routes.get("/api/chart/stocks/all", (req, res) => {
   db.Stocks.findAll({
     where: {
@@ -151,6 +164,21 @@ routes.get("/api/chart/stocks/all", (req, res) => {
     res.json(stocks);
   });
 });
+=======
+routes.get('/api/chart/stocks/all', (req, res) => {
+  db.Stocks.findAll({
+    where: {
+      UserID: 2
+    }
+  })
+    .then(stocks => {
+      console.log('getting info');
+      console.log(stocks);
+      res.json(stocks);
+    });
+});
+
+>>>>>>> origin/master
 
 // routes.post("/api/login", function(req, res) {
 //   console.log("LOGIN")
@@ -172,6 +200,7 @@ routes.get("/api/chart/stocks/all", (req, res) => {
 //     // res.status(422).json(err.errors[0].message);
 //   });
 
+<<<<<<< HEAD
 // adds users stock request into database
 routes.post("/api/saveQuote", function(req, res) {
   db.Stocks.create({
@@ -254,5 +283,38 @@ routes.post("/api/single/quote", function(req, res) {
 
 
 
+=======
+  // adds users stock request into database
+  routes.post("/api/saveQuote", function(req, res) {
+    db.Stocks.create({
+      stock: req.body.stock,
+      UserId: req.body.UserId
+    })
+    .then(function (data) {
+      console.log(data);
+    })
+    .catch(function (err) {
+      console.log(err);
+      res.json(err);
+      // res.status(422).json(err.errors[0].message);
+    });    
+  })
+
+  routes.post("/api/getQuote", function(req, res) {
+    console.log("/api/getQuote/ endpoint hit");
+    console.log(req.body.UserId);
+    db.Stocks.findAll({
+         where: {
+            UserId: req.body.UserId
+         }
+      }).then(function(user) {
+         console.log(user);
+         if (!user) {
+             res.status(400).send({ error: "User not found." });
+         }
+         res.json(user);
+      }).catch(err => console.log(err));
+    })
+>>>>>>> origin/master
 
 module.exports = routes;

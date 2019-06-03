@@ -15,6 +15,7 @@ class NewUser extends Component {
   };
 
   handleFormSubmit = event => {
+<<<<<<< HEAD
     // API.loadStockQuotes({ symbol: "FB" }).then(res => console.log(res));
     API.saveUser({
     	firstname: this.state.firstname,
@@ -49,6 +50,10 @@ class NewUser extends Component {
     console.log(this.state.username);
     let newUser = {
       firstname: this.state.username,
+=======
+    API.saveUser({
+      firstname: this.state.firstname,
+>>>>>>> origin/master
       lastname: this.state.lastname,
       email: this.state.email,
       password: this.state.password,
@@ -65,6 +70,22 @@ class NewUser extends Component {
         console.log('Sign up server error: ')
         console.log(error);
       })
+  };
+
+  // clickButton = event => {
+  //   event.preventDefault();
+  //   console.log("button clicked")
+  // };
+
+  validateForm() {
+    return this.state.email.length > 0 && this.state.password.length > 0;
+  }
+
+  handleChange = event => {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value
+    });
   };
 
   render() {

@@ -57,6 +57,7 @@ class Login extends Component {
   }
 
   handleClick(event) {
+<<<<<<< HEAD
     let self = this;
     console.log("email: ", this.state.email)
     console.log("password: ", this.state.password)
@@ -73,6 +74,22 @@ class Login extends Component {
     })
   
   }
+=======
+    var apiBaseUrl = "http://localhost:3001/api/";
+    var self = this;
+
+    var payload = {
+      "firstname": this.state.firstname,
+      "lastname": this.state.lastname,
+      "email": this.state.username,
+      "password": this.state.password,
+      "goal": this.state.goal
+    }
+
+    axios.post(apiBaseUrl + 'login', payload)
+      .then(function (response) {
+        console.log(response);
+>>>>>>> origin/master
 
   renderRedirect = () => {
     if (this.state.redirect) {
