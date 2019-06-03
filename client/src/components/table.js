@@ -73,9 +73,9 @@ class SimpleTable extends Component {
 									{row.name}
 								</TableCell> */}
 								<TableCell>{row.company}</TableCell>
-								<TableCell>{row.price}</TableCell>
+								<TableCell>##</TableCell>
 								<TableCell>{row.shares}</TableCell>
-								<TableCell>{row.value}</TableCell>
+								<TableCell>$$</TableCell>
 								<TableCell>
 									<IconButton aria-label="Delete">
 										<TrendingUp fontSize="small" />
