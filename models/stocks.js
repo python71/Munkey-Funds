@@ -1,12 +1,24 @@
 
 module.exports = function (sequelize, DataTypes) {
   var Stocks = sequelize.define("Stocks", {
-    stock: {
+    ticker: {
       type: DataTypes.STRING,
       allowNull: false
     },
+    company: {
+      type: DataTypes.STRING,
+    },
+    price: {
+      type: DataTypes.INTEGER,
+    },
     shares: {
       type: DataTypes.INTEGER,
+    },
+    stock_value: {
+      type: DataTypes.INTEGER,
+    },
+    ownerId: {
+      type: DataTypes.INTEGER
     }
   })
 

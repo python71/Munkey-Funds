@@ -14,15 +14,10 @@ class StockChart extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      allData: [],
       stockBtns: [
         {
-          "symbol": 'fb'
-        },
-        {
-          "symbol": 'aapl',
-        },
-        {
-          "symbol": 'fslr'
+          "symbol": ''
         }
       ],
       // dummy data to create the graph structure while waiting for the api request
@@ -87,38 +82,51 @@ class StockChart extends Component {
 
 
   componentDidMount() {
-    API.loadMultipleQuotes({ symbol: "aapl,fb,fslr" })
-      .then(res => {
-        console.log(res.data)
+    const userId = this.props.userId
+    var stockSymbols = []
+    var stockArray = []
+    var temp
+    API.getQuotes({UserId: userId}).then(res => 
+      // console.log(res.data),
+      res.data.forEach(function(item) {
+      stockSymbols.push(item.stock)
+      stockArray.push({symbol:item.stock})
+      console.log("item.stock: ", item.stock)
+      })
+      ).then(res => {
+      temp = stockSymbols.toString()
+      API.loadMultipleQuotes({ temp }).then(res => 
         this.setState({
-          data: res.data
+          data: res.data,
+          stockBtns: stockArray,
+          allData: res.data
+        }))
         })
-        console.log(res.data)
-      });
   };
 
   // click event for stock chart buttons - will display the data for whichever stocks are chosen
   ChartButtonClick = (button) => {
     console.log(`click! ${button}`);
-    API.loadMultipleQuotes({ symbol: button })
+    API.loadSingleQuote({ symbol: button })
       .then(res => {
         console.log(res.data)
         this.setState({
-          data: res.data
+          data: res.data,
         })
         // console.log(res.data)
       });
   };
 
   AllButtonClick = () => {
-    API.loadMultipleQuotes({ symbol: "fslr,fb,aapl" })
-      .then(res => {
-        console.log(res.data)
-        this.setState({
-          data: res.data
-        })
-        // console.log(res.data)
-      });
+    // API.loadSingleQuote( this.state.stockBtns )
+    //   .then(res => {
+    //     console.log(res.data)
+    //     this.setState({
+    //       data: res.data
+    //     })
+    //     // console.log(res.data)
+    //   });
+    this.setState({data: this.state.allData})
   };
 
   render() {
@@ -129,7 +137,7 @@ class StockChart extends Component {
           data={this.state.data}
           margin={{ top: 50, right: 110, bottom: 80, left: 60 }}
           xScale={{ type: 'point' }}
-          yScale={{ type: 'linear', stacked: true, min: 'auto', max: 'auto' }}
+          yScale={{ type: 'linear', stacked: false, min: 'auto', max: 'auto' }}
           axisTop={null}
           axisRight={null}
           axisBottom={{
@@ -146,7 +154,7 @@ class StockChart extends Component {
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: '',
+            legend: 'price',
             legendOffset: -40,
             legendPosition: 'middle'
           }}
@@ -189,7 +197,7 @@ class StockChart extends Component {
         <div className='chart-buttons'>
           {this.state.stockBtns.map(button => (
             <ChartButton
-              key={button.symbol}
+              key={button.symbol + 111}
               symbol={button.symbol}
               ChartButtonClick={this.ChartButtonClick}
             />

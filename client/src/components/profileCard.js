@@ -60,11 +60,21 @@ class ProfileCard extends Component {
   constructor(props) {
 		super(props);
 	
-		this.state = { expanded: false, userData: [], searchOne: "", searchTwo: "", searchThree: "" };
+		this.state = { 
+      expanded: false, 
+      userData: [], 
+      searchOne: "", 
+      searchTwo: "", 
+      searchThree: "",
+      userData: this.props.userData };
 	}
   
   componentWillMount() {
-    this.setState({userData: this.props.userData})
+    this.setState({userData: this.props.userData});
+    this.getStocks();
+
+    
+    // this.getHistoricData();
 
   }
   handleExpandClick = () => {
@@ -79,6 +89,48 @@ class ProfileCard extends Component {
       console.log(res)
     );
   };
+
+  getStocks() {
+    let self = this;
+		fetch('/api/quotes', {
+			method: 'GET'
+		}).then(function(response) {
+			if (response.status >= 400) {
+				throw new Error("Bad response from server");
+			}
+			return response.json();
+		}).then(function(data) {
+      console.log(data)
+      
+      let userStocks = [];
+      data.forEach(function(e) {
+        if(e.ownerId == self.state.userData.id) {
+          userStocks.push(e)
+        }
+      })
+			self.setState({stocks: userStocks})
+	
+		}).catch(err => {
+		console.log('caught it!',err);
+    }) 
+    console.log(self.state.stocks)
+  }
+
+  // getHistoricData(ticker) {
+  //   let self = this;
+  //   let url = `https://api.iextrading.com/1.0/stock/${ticker}/chart/1y`
+  //   fetch(url)
+  //   .then(res => res.json())
+  //   .then(function(data) {
+  //     console.log("api: ", data)
+    
+  //     self.setState({historicData: data});
+  //     console.log("stockChart Data: ", data)
+  //     return data;
+
+
+  //   });
+  // }
   render() {
     const { classes } = this.props;
     return (
@@ -87,7 +139,7 @@ class ProfileCard extends Component {
           <CardHeader
             avatar={
               <Avatar aria-label="Profile" className={classes.avatar}>
-                J
+                {this.state.userData.firstname.slice(0,1)}
 							</Avatar>
             }
             action={<IconButton>{/* <MoreVertIcon /> */}</IconButton>}
@@ -146,35 +198,12 @@ class ProfileCard extends Component {
           <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
             <CardContent>
               <SimpleTable
-                data={[]}
-                header={[
-                  {
-                    stock: "Stock",
-                    prop: "stockSymbol"
-                  },
-                  {
-                    open: "Open",
-                    prop: "openPrice"
-                  },
-                  {
-                    close: "Close",
-                    prop: "closePrice"
-                  },
-                  {
-                    current: "Current Price",
-                    prop: "currentPrice"
-                  },
-                  {
-                    shares: "Number of Shares Held",
-                    prop: "sharesHeld"
-                  },
-                  {
-                    value: "Value of Holding",
-                    prop: "currentValue"
-                  }
-                ]}
+                stocks={this.state.stocks}
               />
-              <StockChart />
+              <StockChart 
+                stocks={this.state.stocks}
+                userId={this.state.userData.id}
+              />
               <br /><br /><br /><br /><br /><br /><br /><br />
               <Typography paragraph style={{ marginTop: 15 }}>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
