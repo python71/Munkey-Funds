@@ -58,9 +58,56 @@ const styles = theme => ({
   }
 });
 class ProfileCard extends Component {
-  state = { expanded: false, searchOne: "", searchTwo: "", searchThree: "" };
+  state = {
+    expanded: false,
+    searchOne: "",
+    searchTwo: "",
+    searchThree: "",
+	newsFeed: [],
+	userId: "2"
+  };
+
   handleExpandClick = () => {
-    this.setState(state => ({ expanded: !state.expanded }));
+    this.setState(state => ({ expanded: !state.expanded}));
+    // this.setState({userId: 2});
+    var stockSymbols = [];
+    var newsArray = [];
+    var temp;
+	console.log(this.state.userId)
+    API.getQuotes({ UserId: this.state.userId })
+      .then(res =>
+        // console.log(res.data),
+        res.data.forEach(function(item) {
+	      console.log(item)
+          stockSymbols.push(item.stock);
+        })
+      )
+      .then(res => {
+		  console.log("stocksymbols ",stockSymbols)
+        temp = stockSymbols.toString();
+        API.loadMultipleQuotes({ temp }).then(response => {
+          console.log(response);
+          response.data.forEach(function(news) {
+            console.log(news);
+            for (var i = 0; i < 3; i++) {
+              newsArray.push(news.news[i]);
+            }
+          });
+		  console.log(newsArray);
+		  let typographyItems = newsArray.map((newsOne) =>
+		  	<Typography>
+				  <h3 style={{marginBottom:"25px"}}><a href={newsOne.link}>{newsOne.headline}</a></h3>
+				  <p>{newsOne.summary}</p>
+				  <p>Source: <strong>{newsOne.source}</strong><br/>Related Ticker: <strong>{newsOne.relatedStock}</strong></p>
+				  <hr/>
+			</Typography>
+		  )
+          this.setState({
+            //   data: res.data,
+            newsFeed: typographyItems
+          });
+        });
+      });
   };
 
   setSymbol = e => {
@@ -74,23 +121,11 @@ class ProfileCard extends Component {
     console.log(this.state.searchOne);
     // Make api call with this.state.search
 
-    // get users stock out of database
-    const userId = 3
-    // API.getQuotes({
-    // 	UserId: userId 
-    // }).then(res => 
-    // 	console.log(res.data),
-    // 	res.data.forEach(function(item) {
-    // 		console.log("Symbol: ", item.stock);
-    // 		 console.log("Shares", item.shares)
-    // 		})
-    // 	)
-
-    API.loadMultipleQuotes({ symbol: this.state.searchOne }).then(res =>
+    API.loadSingleQuote({ symbol: this.state.searchOne }).then(res =>
       // adds users stock to database
       API.saveQuote({
         stock: res.data[0].id,
-        UserId: userId
+        UserId: this.state.userId
       })
     );
   };
@@ -104,7 +139,7 @@ class ProfileCard extends Component {
             avatar={
               <Avatar aria-label="Profile" className={classes.avatar}>
                 J
-							</Avatar>
+              </Avatar>
             }
             action={<IconButton>{/* <MoreVertIcon /> */}</IconButton>}
             title="Jesse Doe"
@@ -118,7 +153,7 @@ class ProfileCard extends Component {
           <CardContent>
             <Typography variant="h4" gutterBottom>
               Overall Investment Performance:
-							<Mood
+              <Mood
                 style={{ fontSize: 40, float: "right", marginRight: 110 }}
               />
             </Typography>
@@ -142,11 +177,11 @@ class ProfileCard extends Component {
                 onClick={e => this._handleSubmit(e)}
               >
                 ADD
-							</Button>
+              </Button>
             </Grid>
             <Typography variant="h5" style={{ marginTop: 30 }}>
               Investment Goal: Long-Term Growth
-						</Typography>
+            </Typography>
           </CardContent>
           <CardActions className={classes.actions} disableActionSpacing>
             <IconButton
@@ -193,7 +228,7 @@ class ProfileCard extends Component {
                   ]
                 }
               />
-              <StockChart />
+              <StockChart user={this.state.userId}/>
               <br />
               <br />
               <br />
@@ -202,33 +237,7 @@ class ProfileCard extends Component {
               <br />
               <br />
               <br />
-              <Typography paragraph style={{ marginTop: 15 }}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-								eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-								enim ad minim veniam, quis nostrud exercitation ullamco laboris
-								nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-								in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-								nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-								sunt in culpa qui officia deserunt mollit anim id est laborum.
-							</Typography>
-              <Typography paragraph style={{ marginTop: 15 }}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-								eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-								enim ad minim veniam, quis nostrud exercitation ullamco laboris
-								nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-								in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-								nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-								sunt in culpa qui officia deserunt mollit anim id est laborum.
-							</Typography>
-              <Typography paragraph style={{ marginTop: 15 }}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-								eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-								enim ad minim veniam, quis nostrud exercitation ullamco laboris
-								nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-								in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-								nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-								sunt in culpa qui officia deserunt mollit anim id est laborum.
-							</Typography>
+			  {this.state.newsFeed}
             </CardContent>
           </Collapse>
         </Card>
